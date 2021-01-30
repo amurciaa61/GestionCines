@@ -1,12 +1,31 @@
-﻿<Window x:Class="GestionCines.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GestionCines"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-         
-    </Grid>
+﻿<Window
+    x:Class="GestionCines.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:GestionCines"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="DeCine"
+    Width="900"
+    Height="600"
+    Icon="Imagenes/film.ico"
+    mc:Ignorable="d">
+    <Window.CommandBindings>
+        <CommandBinding Command="local:CustomCommands.Ayuda"
+                        Executed="CommandBinding_Executed_Ayuda"
+                        CanExecute="CommandBinding_CanExecute_Ayuda" />
+        <CommandBinding Command="local:CustomCommands.Salir"
+                        Executed="CommandBinding_Executed_Salir"
+                        CanExecute="CommandBinding_CanExecute_Salir" />
+    </Window.CommandBindings>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Ayuda"
+                      Command="local:CustomCommands.Ayuda">                
+            </MenuItem>
+            <MenuItem Header="_Salir"
+                      Command="local:CustomCommands.Salir">                
+            </MenuItem>
+        </Menu>
+    </DockPanel>
 </Window>

@@ -20,9 +20,33 @@ namespace GestionCines
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainWindowVM _vm; 
         public MainWindow()
         {
+            // Instanciamos la clase VistaModelo
+            _vm = new MainWindowVM();
             InitializeComponent();
+            DataContext = _vm;
+        }
+
+        private void CommandBinding_Executed_Ayuda(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Ayuda();
+        }
+
+        private void CommandBinding_CanExecute_Ayuda(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _vm.PuedoMostrarAyuda();
+        }
+
+        private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
+        {
+            App.Current.Shutdown();
+        }
+
+        private void CommandBinding_CanExecute_Salir(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
         }
     }
 }
