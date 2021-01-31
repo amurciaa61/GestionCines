@@ -11,21 +11,24 @@
     Icon="Imagenes/film.ico"
     mc:Ignorable="d">
     <Window.CommandBindings>
-        <CommandBinding Command="local:CustomCommands.Ayuda"
-                        Executed="CommandBinding_Executed_Ayuda"
-                        CanExecute="CommandBinding_CanExecute_Ayuda" />
-        <CommandBinding Command="local:CustomCommands.Salir"
-                        Executed="CommandBinding_Executed_Salir"
-                        CanExecute="CommandBinding_CanExecute_Salir" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_Salas"
+            Command="local:CustomCommands.Salas"
+            Executed="CommandBinding_Executed_Salas" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_Ayuda"
+            Command="local:CustomCommands.Ayuda"
+            Executed="CommandBinding_Executed_Ayuda" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_Salir"
+            Command="local:CustomCommands.Salir"
+            Executed="CommandBinding_Executed_Salir" />
     </Window.CommandBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_Ayuda"
-                      Command="local:CustomCommands.Ayuda">                
-            </MenuItem>
-            <MenuItem Header="_Salir"
-                      Command="local:CustomCommands.Salir">                
-            </MenuItem>
+            <MenuItem Command="local:CustomCommands.Salas" Header="S_alas" />
+            <MenuItem Command="local:CustomCommands.Ayuda" Header="_Ayuda" />
+            <MenuItem Command="local:CustomCommands.Salir" Header="_Salir" />
         </Menu>
     </DockPanel>
 </Window>

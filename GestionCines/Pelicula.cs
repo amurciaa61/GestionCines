@@ -4,7 +4,7 @@ namespace GestionCines
 {
     class Pelicula : INotifyPropertyChanged
     {
-        public int IDPELICULA { get; set; }
+        public int ID { get; set; }
         public string TITULO { get; set; }
         public string CARTEL { get; set; }
         public int AÑO { get; set; }
@@ -17,7 +17,7 @@ namespace GestionCines
 
         public Pelicula(int idPelicula, string titulo, string cartel, int año, string genero, string calificacion)
         {
-            IDPELICULA = idPelicula;
+            ID = idPelicula;
             TITULO = titulo;
             CARTEL = cartel;
             AÑO = año;

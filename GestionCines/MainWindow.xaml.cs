@@ -48,5 +48,15 @@ namespace GestionCines
         {
             e.CanExecute = true;
         }
+
+        private void CommandBinding_Executed_Salas(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Salas(this);
+        }
+
+        private void CommandBinding_CanExecute_Salas(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
     }
 }
