@@ -20,6 +20,13 @@ namespace GestionCines
             SALA = sala;
             HORA = hora;
         }
+        public Sesion(Sesion sesion)
+        {
+            IDSESION = sesion.IDSESION;
+            PELICULA = sesion.PELICULA;
+            SALA = sesion.SALA;
+            HORA = sesion.HORA;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

@@ -99,6 +99,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="InformeDetalle.xaml.cs">
+      <DependentUpon>InformeDetalle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InformeDetalleVM.cs" />
+    <Compile Include="OfertaDisponible.cs" />
+    <Compile Include="InformeGeneral.xaml.cs">
+      <DependentUpon>InformeGeneral.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InformeGeneralVM.cs" />
+    <Compile Include="Informe.cs" />
     <Compile Include="Sala.cs" />
     <Compile Include="Salas.xaml.cs">
       <DependentUpon>Salas.xaml</DependentUpon>
@@ -107,7 +117,23 @@
     <Compile Include="ServicioBaseDatos.cs" />
     <Compile Include="ServicioPeliculaGet.cs" />
     <Compile Include="Sesion.cs" />
+    <Compile Include="Sesiones.xaml.cs">
+      <DependentUpon>Sesiones.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SesionesVM.cs" />
     <Compile Include="Venta.cs" />
+    <Compile Include="Ventas.xaml.cs">
+      <DependentUpon>Ventas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VentasVM.cs" />
+    <Page Include="InformeDetalle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InformeGeneral.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -123,6 +149,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Salas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sesiones.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ventas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -157,6 +191,27 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagenes\film.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\informegeneral.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\sala.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\sesiones.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\fondoMainWindow.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\exit.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\euro.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagenes\detalleventas.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.3.0\build\Fody.targets')" />

@@ -31,25 +31,66 @@ namespace GestionCines
                 new KeyGesture(Key.S,ModifierKeys.Control)
             }
             );
-        public static readonly RoutedUICommand EditarSala = new RoutedUICommand
-            ("EditarSala",
-            "EditarSala",
+        public static readonly RoutedUICommand Editar = new RoutedUICommand
+            ("Editar",
+            "Editar",
             typeof(CustomCommands)
             );
-        public static readonly RoutedUICommand InsertarSala = new RoutedUICommand
-            ("InsertarSala",
-             "InsertarSala",
+        public static readonly RoutedUICommand Insertar = new RoutedUICommand
+            ("Insertar",
+             "Insertar",
              typeof(CustomCommands)
             );
-        public static readonly RoutedUICommand GuardarCambiosSala = new RoutedUICommand
-            ("GuardarCambiosSala",
-            "GuardarCambiosSala",
+        public static readonly RoutedUICommand Borrar = new RoutedUICommand
+          ("Borrar",
+           "Borrar",
+           typeof(CustomCommands)
+          );
+        public static readonly RoutedUICommand GuardarCambios = new RoutedUICommand
+            ("GuardarCambios",
+            "GuardarCambios",
             typeof(CustomCommands)
             );
         public static readonly RoutedUICommand Cancelar = new RoutedUICommand
             ("Cancelar",
             "Cancelar",
             typeof(CustomCommands)
+            );
+        public static readonly RoutedUICommand Sesiones = new RoutedUICommand
+            ("Sesiones",
+            "Sesiones",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                  new KeyGesture(Key.E, ModifierKeys.Control)
+            }
+            );
+        public static readonly RoutedUICommand InformeGeneral = new RoutedUICommand
+            ("InformeGeneral",
+            "InformeGeneral",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.G,ModifierKeys.Alt)
+            }
+            );
+        public static readonly RoutedUICommand InformeDetalle = new RoutedUICommand
+            ("InformeDetalle",
+            "InformeDetalle",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.D,ModifierKeys.Alt)
+            }
+            );
+        public static readonly RoutedUICommand Ventas = new RoutedUICommand
+            ("Ventas",
+            "Ventas",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.V,ModifierKeys.Alt)
+            }
             );
     }
 }

@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
+
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace GestionCines
 {
@@ -34,11 +31,6 @@ namespace GestionCines
             _vm.Ayuda();
         }
 
-        private void CommandBinding_CanExecute_Ayuda(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = _vm.PuedoMostrarAyuda();
-        }
-
         private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
         {
             App.Current.Shutdown();
@@ -54,9 +46,24 @@ namespace GestionCines
             _vm.Salas(this);
         }
 
-        private void CommandBinding_CanExecute_Salas(object sender, CanExecuteRoutedEventArgs e)
+        private void CommandBinding_Executed_Sesiones(object sender, ExecutedRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            _vm.Sesiones(this);
         }
+
+        private void CommandBinding_Executed_InformeGeneral(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.InformeGeneral(this);
+        }
+        private void CommandBinding_Executed_InformeDetalle(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.InformeDetalle(this);
+        }
+        private void CommandBinding_Executed_Ventas(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Ventas(this);
+        }
+
+
     }
 }

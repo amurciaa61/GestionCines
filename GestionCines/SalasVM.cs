@@ -19,7 +19,7 @@ namespace GestionCines
         public SalasVM()
         {
             bbdd = new ServicioBaseDatos();
-            SALAS = bbdd.ObtenerSalas();
+            SALAS = bbdd.ObtenerSalas(false);
             SALAFORMULARIO = new Sala();
             ACCION = Modo.Insertar;
         }
@@ -50,7 +50,7 @@ namespace GestionCines
             else
                 bbdd.ActualizarSala(SALAFORMULARIO);
             SALAFORMULARIO = new Sala();
-            SALAS = bbdd.ObtenerSalas();
+            SALAS = bbdd.ObtenerSalas(false);
         }
         public void Cancelar()
         {

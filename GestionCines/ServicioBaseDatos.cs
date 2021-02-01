@@ -7,7 +7,7 @@ namespace GestionCines
     class ServicioBaseDatos
     {
         private readonly SqliteConnection conexion;
-        private SqliteCommand comando;
+        public SqliteCommand comando;
         private string FECHADELDIA { get; set; }
 
         public ServicioBaseDatos()
@@ -15,18 +15,23 @@ namespace GestionCines
             conexion = new SqliteConnection("Data Source=cines.db");
             FECHADELDIA = formatearFechaDelDia();
         }
-        public ObservableCollection<Sala> ObtenerSalas()
+        public ObservableCollection<Sala> ObtenerSalas(bool soloDisponibles)
         {
             ObservableCollection<Sala> salas = new ObservableCollection<Sala>();
             conexion.Open();
             comando = conexion.CreateCommand();
             comando.CommandText = "SELECT * from salas";
+            if (soloDisponibles)
+            {
+                comando.CommandText += " WHERE disponible = true";
+            }
+
             SqliteDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
             {
                 while (lector.Read())
                 {
-                    salas.Add(new Sala(lector.GetInt32(0), lector.GetString(1), lector.GetInt32(2),lector.GetBoolean(3)));
+                    salas.Add(new Sala(lector.GetInt32(0), lector.GetString(1), lector.GetInt32(2), lector.GetBoolean(3)));
                 }
             }
             lector.Close();
@@ -64,6 +69,7 @@ namespace GestionCines
             comando.ExecuteNonQuery();
             conexion.Close();
         }
+        // No puede haber dos salas con el mismo número
         public bool ExisteSala(Sala salaFormulario)
         {
             bool existe = false;
@@ -171,14 +177,234 @@ namespace GestionCines
             {
                 while (lector.Read())
                 {
-                    peliculas.Add(new Pelicula(lector.GetInt32(0),lector.GetString(1),lector.GetString(2),
-                        lector.GetInt32(3),lector.GetString(4),lector.GetString(5)));
+                    peliculas.Add(new Pelicula(lector.GetInt32(0), lector.GetString(1), lector.GetString(2),
+                        lector.GetInt32(3), lector.GetString(4), lector.GetString(5)));
                 }
             }
             lector.Close();
             conexion.Close();
             return peliculas;
         }
+        public ObservableCollection<Sesion> ObtenerSesiones()
+        {
+            ObservableCollection<Sesion> sesiones = new ObservableCollection<Sesion>();
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "select idsesion,p.*,s.*,hora from sesiones " +
+                                  "join peliculas p " +
+                                  "on p.idPelicula = sesiones.pelicula " +
+                                  "join salas s " +
+                                  "on sesiones.sala = s.idSala ";
+            SqliteDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    Pelicula pelicula = new Pelicula(lector.GetInt32(1), lector.GetString(2), lector.GetString(3), lector.GetInt32(4), lector.GetString(5), lector.GetString(6));
+                    Sala sala = new Sala(lector.GetInt32(7), lector.GetString(8), lector.GetInt32(9), lector.GetBoolean(10));
+                    sesiones.Add(new Sesion(lector.GetInt32(0), pelicula, sala, lector.GetString(11)));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return sesiones;
+        }
+        public void InsertarSesion(Sesion sesionFormulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "INSERT INTO sesiones VALUES(null,@pelicula,@sala,@hora)";
+            comando.Parameters.Add("@pelicula", SqliteType.Integer);
+            comando.Parameters["@pelicula"].Value = sesionFormulario.PELICULA.ID;
+            comando.Parameters.Add("@sala", SqliteType.Integer);
+            comando.Parameters["@sala"].Value = sesionFormulario.SALA.IDSALA;
+            comando.Parameters.Add("@hora", SqliteType.Text);
+            comando.Parameters["@hora"].Value = sesionFormulario.HORA;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public void ActualizarSesion(Sesion sesionFormulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "UPDATE sesiones SET pelicula = @pelicula, sala = @sala, hora = @hora" +
+                " WHERE idSesion = @idSesion";
+            comando.Parameters.Add("@idSesion", SqliteType.Integer);
+            comando.Parameters["@idSesion"].Value = sesionFormulario.IDSESION;
+            comando.Parameters.Add("@pelicula", SqliteType.Integer);
+            comando.Parameters["@pelicula"].Value = sesionFormulario.PELICULA.ID;
+            comando.Parameters.Add("@sala", SqliteType.Integer);
+            comando.Parameters["@sala"].Value = sesionFormulario.SALA.IDSALA;
+            comando.Parameters.Add("@hora", SqliteType.Text);
+            comando.Parameters["@hora"].Value = sesionFormulario.HORA;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public void BorrarSesion(Sesion sesionFormulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "DELETE FROM sesiones WHERE idSesion = @idSesion";
+            comando.Parameters.Add("@idSesion", SqliteType.Integer);
+            comando.Parameters["@idSesion"].Value = sesionFormulario.IDSESION;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public ObservableCollection<Informe> ObtenerInformeGeneral()
+        {
+            ObservableCollection<Informe> listado = new ObservableCollection<Informe>();
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "select se.hora,p.*,s.*,se.idSesion from peliculas p " +
+                      "LEFT join sesiones se " +
+                      "on p.idPelicula = se.pelicula " +
+                      "LEFT join salas s " +
+                      "on se.sala = s.idSala ";
+            SqliteDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                Sala sala;
+                Pelicula pelicula;
+                string hora = "";
+                int ventas = 0;
+                while (lector.Read())
+                {
+                    pelicula = new Pelicula(lector.GetInt32(1), lector.GetString(2), lector.GetString(3), lector.GetInt32(4), lector.GetString(5), lector.GetString(6));
 
+                    if (PeliculaTieneSesiones(lector.GetInt32(1)))
+                    {
+                        sala = new Sala(lector.GetInt32(7), lector.GetString(8), lector.GetInt32(9), lector.GetBoolean(10));
+                        hora = lector.GetString(0);
+                        ventas = ObtenerVentasPorSesion(lector.GetInt32(11));
+                    }
+                    else
+                    {
+                        sala = new Sala();
+                        hora = "";
+                        ventas = 0;
+                    }
+                    listado.Add(new Informe(pelicula, sala, hora, ventas));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return listado;
+        }
+
+
+        public bool PeliculaTieneSesiones(int iDpelicula)
+        {
+            int resultado;
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT COUNT(*) FROM sesiones WHERE pelicula = @pelicula";
+            comando.Parameters.Add("@pelicula", SqliteType.Integer);
+            comando.Parameters["@pelicula"].Value = iDpelicula;
+            if (Convert.IsDBNull(comando.ExecuteScalar()))
+                resultado = 0;
+            else
+                resultado = Convert.ToInt32(comando.ExecuteScalar());
+            return resultado > 0;
+        }
+        public int ObtenerVentasPorSesion(int sesionId)
+        {
+            int resultado;
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT SUM(cantidad) FROM ventas WHERE sesion = @sesion";
+            comando.Parameters.Add("@sesion", SqliteType.Integer);
+            comando.Parameters["@sesion"].Value = sesionId;
+            if (Convert.IsDBNull(comando.ExecuteScalar()))
+                resultado = 0;
+            else
+                resultado = Convert.ToInt32(comando.ExecuteScalar());
+            return resultado;
+        }
+        public ObservableCollection<Informe> ObtenerInformeDetalle()
+        {
+            ObservableCollection<Informe> listado = new ObservableCollection<Informe>();
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "select se.hora,p.titulo,s.numero,v.idVenta,v.cantidad,v.pago from peliculas p " +
+                      "JOIN sesiones se " +
+                      "on p.idPelicula = se.pelicula " +
+                      "JOIN salas s " +
+                      "on se.sala = s.idSala " +
+                      "JOIN ventas v " +
+                      "on v.sesion = se.idSesion";
+            SqliteDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+
+                while (lector.Read())
+                {
+                    listado.Add(new Informe(lector.GetString(1),lector.GetString(0),lector.GetInt32(2), lector.GetInt32(3),
+                                            lector.GetInt32(4), lector.GetString(5)));
+
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return listado;
+        }
+        public ObservableCollection<OfertaDisponible> ObtenerOfertaDisponible()
+        {
+            ObservableCollection<OfertaDisponible> ofertas = new ObservableCollection<OfertaDisponible>();
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "select se.hora,p.*,s.*,se.idSesion from peliculas p " +
+                      "join sesiones se " +
+                      "on p.idPelicula = se.pelicula " +
+                      "join salas s " +
+                      "on se.sala = s.idSala " +
+                      "WHERE s.disponible = true";  // Solo salas disponibles
+            SqliteDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    int capacidad = lector.GetInt32(9);  // capacidad de la sala
+                    int disponibilidad = capacidad - ObtenerVentasPorSesion(lector.GetInt32(11)); // entradas disponibles en la sesion
+                    if (disponibilidad > 0)
+                        ofertas.Add(new OfertaDisponible(lector.GetString(2), lector.GetString(0), lector.GetInt32(8),
+                                                         disponibilidad, lector.GetInt32(11)));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return ofertas;
+        }
+        public ObservableCollection<string> ObtenerFormaDePago()
+        {
+            ObservableCollection<string> formaDePago = new ObservableCollection<string>();
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "select * FROM formadepago";
+            SqliteDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    formaDePago.Add(lector.GetString(0));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return formaDePago;
+        }
+        public void InsertarVenta(OfertaDisponible ventaFormulario)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "INSERT INTO ventas VALUES(null,@sesion,@cantidad,@pago)";
+            comando.Parameters.Add("@sesion", SqliteType.Integer);
+            comando.Parameters["@sesion"].Value = ventaFormulario.IDSESION;
+            comando.Parameters.Add("@cantidad", SqliteType.Integer);
+            comando.Parameters["@cantidad"].Value = ventaFormulario.CANTIDAD;
+            comando.Parameters.Add("@pago", SqliteType.Text);
+            comando.Parameters["@pago"].Value = ventaFormulario.PAGO;
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
     }
 }

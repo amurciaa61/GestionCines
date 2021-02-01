@@ -8,16 +8,20 @@
     Title="Salas"
     Width="600"
     Height="450"
+    MinWidth="600"
+    MinHeight="450"
+    Background="#74DDF8"
+    ShowInTaskbar="False"
     mc:Ignorable="d">
     <Window.CommandBindings>
         <CommandBinding
             CanExecute="CommandBinding_CanExecute_EditarSala"
-            Command="local:CustomCommands.EditarSala"
+            Command="local:CustomCommands.Editar"
             Executed="CommandBinding_Executed_EditarSala" />
-        <CommandBinding Command="local:CustomCommands.InsertarSala" Executed="CommandBinding_Executed_AñadirSala" />
+        <CommandBinding Command="local:CustomCommands.Insertar" Executed="CommandBinding_Executed_AñadirSala" />
         <CommandBinding
             CanExecute="CommandBinding_CanExecute_GuardarCambiosSala"
-            Command="local:CustomCommands.GuardarCambiosSala"
+            Command="local:CustomCommands.GuardarCambios"
             Executed="CommandBinding_Executed_GuardarCambiosSala" />
         <CommandBinding
             CanExecute="CommandBinding_CanExecute_Cancelar"
@@ -25,19 +29,7 @@
             Executed="CommandBinding_Executed_Cancelar" />
     </Window.CommandBindings>
     <Window.Resources>
-        <!--  Botones  -->
-        <Style TargetType="Button">
-            <Setter Property="Width" Value="100" />
-            <Setter Property="Margin" Value="10,0,10,0" />
-        </Style>
         <!--  TextBox y TextBlock y CheckBox  -->
-        <Style TargetType="TextBox">
-            <Setter Property="Margin" Value="0,0,0,10" />
-
-        </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="Margin" Value="0,0,0,5" />
-        </Style>
         <Style TargetType="CheckBox">
             <Setter Property="Margin" Value="0,0,0,10" />
         </Style>
@@ -48,13 +40,9 @@
             <ColumnDefinition Width="250" />
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0">
-            <StackPanel
-                Margin="0,0,0,10"
-                HorizontalAlignment="Center"
-                DockPanel.Dock="Bottom"
-                Orientation="Horizontal">
-                <Button Command="local:CustomCommands.EditarSala">Editar</Button>
-                <Button Command="local:CustomCommands.InsertarSala">Añadir</Button>
+            <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource StackPanelBottom}">
+                <Button Command="local:CustomCommands.Editar">Editar</Button>
+                <Button Command="local:CustomCommands.Insertar">Añadir</Button>
             </StackPanel>
             <DataGrid
                 x:Name="salasDataGrid"
@@ -76,10 +64,7 @@
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>
-        <StackPanel
-            Grid.Column="1"
-            Margin="10"
-            Orientation="Vertical">
+        <StackPanel Grid.Column="1" Style="{StaticResource StackPanelEdicion}">
             <TextBlock Text="Id" />
             <TextBox
                 x:Name="idSalaTextBox"
@@ -94,8 +79,8 @@
                 Content="Disponible"
                 IsChecked="{Binding Path=SALAFORMULARIO.DISPONIBLE, UpdateSourceTrigger=PropertyChanged}" />
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <Button Command="local:CustomCommands.Cancelar">Cancelar</Button>
-                <Button Command="local:CustomCommands.GuardarCambiosSala" IsCancel="True">Guardar</Button>
+                <Button Command="local:CustomCommands.Cancelar" IsCancel="True">Cancelar</Button>
+                <Button Command="local:CustomCommands.GuardarCambios">Guardar</Button>
             </StackPanel>
         </StackPanel>
     </Grid>

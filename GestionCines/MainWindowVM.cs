@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace GestionCines
 {
@@ -39,15 +33,36 @@ namespace GestionCines
         {
             
         }
-        public bool PuedoMostrarAyuda()
-        {
-            return true;
-        }
+
         public void Salas(MainWindow mainWindow)
         {
             Salas salas = new Salas();
             salas.Owner = mainWindow;
             salas.Show();
+        }
+        public void Sesiones(MainWindow mainWindow)
+        {
+            Sesiones sesiones = new Sesiones();
+            sesiones.Owner = mainWindow;
+            sesiones.Show();
+        }
+        public void InformeGeneral(MainWindow mainWindow)
+        {
+            InformeGeneral informe = new InformeGeneral();
+            informe.Owner = mainWindow;
+            informe.Show();
+        }
+        public void InformeDetalle(MainWindow mainWindow)
+        {
+            InformeDetalle informe = new InformeDetalle();
+            informe.Owner = mainWindow;
+            informe.Show();
+        }
+        public void Ventas(MainWindow mainWindow)
+        {
+            Ventas ventas = new Ventas();
+            ventas.Owner = mainWindow;
+            ventas.Show();
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }
