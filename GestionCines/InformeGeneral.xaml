@@ -7,9 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Informe General"
     Width="900"
-    Height="500"
+    Height="600"
     MinWidth="900"
-    MinHeight="500"
+    MinHeight="600"
     Background="#74DDF8"
     ShowInTaskbar="False"
     mc:Ignorable="d">
@@ -37,17 +37,21 @@
                     Width="40"
                     Binding="{Binding Path=SALA.NUMERO}"
                     Header="Sala" />
+                <DataGridTextColumn Binding="{Binding Path=DISPONIBILIDAD}"
+                                    Header="Disponible" />
                 <DataGridTextColumn Binding="{Binding Path=VENTAS}" Header="Ventas" />
                 <DataGridTextColumn
                     Width="60"
                     Binding="{Binding Path=PORCENTAJEOCUPACION}"
                     Header="% Ventas" />
-                <DataGridTextColumn Binding="{Binding Path=SALA.CAPACIDAD}" Header="Capacidad" />
+                <DataGridTextColumn Binding="{Binding Path=SALA.CAPACIDAD}"
+                                    Header="Capacidad" />
                 <DataGridTextColumn
                     Width="50"
                     Binding="{Binding Path=PELICULA.AÑO}"
                     Header="Año" />
-                <DataGridTextColumn Binding="{Binding Path=PELICULA.GENERO}" Header="Genero" />
+                <DataGridTextColumn Binding="{Binding Path=PELICULA.GENERO}" Header="Genero"
+                                    Width="60" />
                 <DataGridTextColumn Binding="{Binding Path=PELICULA.CALIFICACION}" Header="Calificacion" />
             </DataGrid.Columns>
         </DataGrid>

@@ -6,6 +6,7 @@ namespace GestionCines
 {
     class ServicioBaseDatos
     {
+        const int MAX_SESIONES_POR_SALA = 3;
         private readonly SqliteConnection conexion;
         public SqliteCommand comando;
         private string FECHADELDIA { get; set; }
@@ -21,9 +22,11 @@ namespace GestionCines
             conexion.Open();
             comando = conexion.CreateCommand();
             comando.CommandText = "SELECT * from salas";
+            // Si solo disponibles, además comprobaremos que no tengan más de MAX_SESIONES_POR_SALA
             if (soloDisponibles)
             {
-                comando.CommandText += " WHERE disponible = true";
+                comando.CommandText += " WHERE disponible = true " +
+                                       "and (select count(*) from sesiones where sala = idSala) < " + MAX_SESIONES_POR_SALA;
             }
 
             SqliteDataReader lector = comando.ExecuteReader();
@@ -259,7 +262,8 @@ namespace GestionCines
                       "LEFT join sesiones se " +
                       "on p.idPelicula = se.pelicula " +
                       "LEFT join salas s " +
-                      "on se.sala = s.idSala ";
+                      "on se.sala = s.idSala " +
+                      "ORDER BY p.titulo,se.hora,se.sala";
             SqliteDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
             {
