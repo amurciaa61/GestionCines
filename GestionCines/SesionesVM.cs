@@ -12,7 +12,6 @@ namespace GestionCines
     {
         public Sesion SESIONSELECCIONADA { get; set; }
         public Sesion SESIONFORMULARIO { get; set; }
-
         public ObservableCollection<Sesion> SESIONES { get; set; }
         public ObservableCollection<Pelicula> PELICULAS { get; set; }
         public ObservableCollection<Sala> SALAS { get; set; }
@@ -20,13 +19,11 @@ namespace GestionCines
 
         private readonly ServicioBaseDatos bbdd;
 
-        public SesionesVM() 
+        public SesionesVM()
         {
             bbdd = new ServicioBaseDatos();
-            SESIONFORMULARIO = new Sesion();
-            SESIONES = bbdd.ObtenerSesiones();
-            PELICULAS = bbdd.ObtenerPeliculas();
-            SALAS = bbdd.ObtenerSalas(true);   
+            InicializarVariables();
+            PELICULAS = bbdd.ObtenerPeliculas(false);
             ACCION = Modo.Insertar;
         }
         public void AñadirSesion()
@@ -43,7 +40,8 @@ namespace GestionCines
         {
             SESIONFORMULARIO = new Sesion(SESIONSELECCIONADA);
             bbdd.BorrarSesion(SESIONFORMULARIO);
-            SESIONES = bbdd.ObtenerSesiones();
+            InicializarVariables();
+            ACCION = Modo.Borrar;
         }
         public bool HaySesionSeleccionada()
         {
@@ -51,20 +49,19 @@ namespace GestionCines
         }
         public bool FormularioOk()
         {
-             return SESIONFORMULARIO.HORA != "" && 
+            return SESIONFORMULARIO.HORA != "" &&
+                   SESIONFORMULARIO.HORA != null &&
                    SESIONFORMULARIO.PELICULA != null &&
-                   SESIONFORMULARIO.SALA != null;
+                   SESIONFORMULARIO.SALA != null &&
+                   ACCION != Modo.Borrar;
         }
         public void GuardarCambios()
         {
             if (ACCION == Modo.Insertar)
-            {
                 bbdd.InsertarSesion(SESIONFORMULARIO);
-            }
             else
                 bbdd.ActualizarSesion(SESIONFORMULARIO);
-            SESIONFORMULARIO = new Sesion();
-            SESIONES = bbdd.ObtenerSesiones();
+            InicializarVariables();
         }
         public void Cancelar()
         {
@@ -73,6 +70,12 @@ namespace GestionCines
         public bool HayDatos()
         {
             return SESIONFORMULARIO.HORA != null;
+        }
+        public void InicializarVariables()
+        {
+            SESIONFORMULARIO = new Sesion();
+            SESIONES = bbdd.ObtenerSesiones();
+            SALAS = bbdd.ObtenerSalas(true,false);
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

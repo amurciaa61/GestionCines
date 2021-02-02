@@ -5,6 +5,10 @@
     xmlns:local="clr-namespace:GestionCines"
     StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <!--  DataGrid  -->
+        <Style TargetType="DataGrid">
+            <Setter Property="FontSize" Value="15" />
+        </Style>
         <!--  Botones  -->
         <Style TargetType="Button">
             <Setter Property="Width" Value="100" />
@@ -13,6 +17,7 @@
         <!--  TextBox y TextBlock  -->
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="0,0,0,10" />
+            <Setter Property="FontSize" Value="20" />
         </Style>
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="0,0,0,5" />

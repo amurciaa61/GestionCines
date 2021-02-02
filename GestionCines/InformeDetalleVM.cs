@@ -6,11 +6,10 @@ namespace GestionCines
 {
     class InformeDetalleVM : INotifyPropertyChanged
     {
-        private readonly ServicioBaseDatos bbdd;
         public ObservableCollection<Informe> LISTA { get; set; }
         public InformeDetalleVM()
         {
-            bbdd = new ServicioBaseDatos();
+            ServicioBaseDatos bbdd = new ServicioBaseDatos();
             LISTA = bbdd.ObtenerInformeDetalle();
         }
 

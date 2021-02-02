@@ -1,33 +1,37 @@
-﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:GestionCines"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        x:Class="GestionCines.Sesiones"
-        Title="Sesiones"
-        Width="650"
-        Height="450"
-        MinWidth="650"
-        MinHeight="450"
-        mc:Ignorable="d"
-        ShowInTaskbar="False"
-        Background="#74DDF8">
+﻿<Window
+    x:Class="GestionCines.Sesiones"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:GestionCines"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Sesiones"
+    Width="800"
+    Height="600"
+    MinWidth="800"
+    MinHeight="600"
+    Background="#74DDF8"
+    ShowInTaskbar="False"
+    mc:Ignorable="d">
     <Window.CommandBindings>
-        <CommandBinding CanExecute="CommandBinding_CanExecute_Editar"
-                        Command="local:CustomCommands.Editar"
-                        Executed="CommandBinding_Executed_Editar" />
-        <CommandBinding Command="local:CustomCommands.Insertar"
-                        Executed="CommandBinding_Executed_Añadir" />
-        <CommandBinding CanExecute="CommandBinding_CanExecute_Editar"
-                        Command="local:CustomCommands.Borrar"
-                        Executed="CommandBinding_Executed_Borrar" />
-        <CommandBinding CanExecute="CommandBinding_CanExecute_GuardarCambios"
-                        Command="local:CustomCommands.GuardarCambios"
-                        Executed="CommandBinding_Executed_GuardarCambios" />
-        <CommandBinding CanExecute="CommandBinding_CanExecute_Cancelar"
-                        Command="local:CustomCommands.Cancelar"
-                        Executed="CommandBinding_Executed_Cancelar" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_Editar"
+            Command="local:CustomCommands.Editar"
+            Executed="CommandBinding_Executed_Editar" />
+        <CommandBinding Command="local:CustomCommands.Insertar" Executed="CommandBinding_Executed_Añadir" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_Editar"
+            Command="local:CustomCommands.Borrar"
+            Executed="CommandBinding_Executed_Borrar" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_GuardarCambios"
+            Command="local:CustomCommands.GuardarCambios"
+            Executed="CommandBinding_Executed_GuardarCambios" />
+        <CommandBinding
+            CanExecute="CommandBinding_CanExecute_Cancelar"
+            Command="local:CustomCommands.Cancelar"
+            Executed="CommandBinding_Executed_Cancelar" />
     </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -35,66 +39,61 @@
             <ColumnDefinition Width="250" />
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0">
-            <StackPanel DockPanel.Dock="Bottom"
-                        Style="{StaticResource StackPanelBottom}">
-                <Button Command="local:CustomCommands.Borrar"
-                        Content="Borrar" />
-                <Button Command="local:CustomCommands.Editar"
-                        Content="Editar" />
-                <Button Command="local:CustomCommands.Insertar"
-                        Content="Añadir" />
+            <StackPanel DockPanel.Dock="Bottom" Style="{StaticResource StackPanelBottom}">
+                <Button Command="local:CustomCommands.Borrar" Content="Borrar" />
+                <Button Command="local:CustomCommands.Editar" Content="Editar" />
+                <Button Command="local:CustomCommands.Insertar" Content="Añadir" />
             </StackPanel>
-            <DataGrid x:Name="sesionesDataGrid"
-                      Margin="10,10,0,10"
-                      AlternatingRowBackground="LightBlue"
-                      AlternationCount="2"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      CanUserDeleteRows="False"
-                      ColumnWidth="*"
-                      IsReadOnly="True"
-                      ItemsSource="{Binding SESIONES}"
-                      SelectedItem="{Binding SESIONSELECCIONADA}">
+            <DataGrid
+                x:Name="sesionesDataGrid"
+                Margin="10,10,0,10"
+                AlternatingRowBackground="LightBlue"
+                AlternationCount="2"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                CanUserDeleteRows="False"
+                ColumnWidth="*"
+                IsReadOnly="True"
+                ItemsSource="{Binding SESIONES}"
+                SelectedItem="{Binding SESIONSELECCIONADA}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding IDSESION}"
-                                        Header="ID" />
-                    <DataGridTextColumn Binding="{Binding PELICULA.TITULO}"
-                                        Header="Película" />
-                    <DataGridTextColumn Binding="{Binding SALA.NUMERO}"
-                                        Header="Sala" />
-                    <DataGridTextColumn Binding="{Binding HORA}"
-                                        Header="Hora" />
+                    <DataGridTextColumn Binding="{Binding IDSESION}" Header="ID" />
+                    <DataGridTextColumn Binding="{Binding PELICULA.TITULO}" Header="Película" Width="300"/>
+                    <DataGridTextColumn Binding="{Binding SALA.NUMERO}" Header="Sala" />
+                    <DataGridTextColumn Binding="{Binding HORA}" Header="Hora" />
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>
-        <StackPanel Grid.Column="1"
-                    Style="{StaticResource StackPanelEdicion}">
+        <StackPanel Grid.Column="1" Style="{StaticResource StackPanelEdicion}">
             <TextBlock Text="Id" />
-            <TextBox x:Name="idSesionTextBox"
-                     IsReadOnly="True"
-                     Text="{Binding SESIONFORMULARIO.IDSESION, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox
+                x:Name="idSesionTextBox"
+                IsReadOnly="True"
+                Text="{Binding SESIONFORMULARIO.IDSESION, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Pelicula" />
-            <ComboBox x:Name="peliculaComboBox"
-                      DisplayMemberPath="TITULO"
-                      ItemsSource="{Binding PELICULAS}"
-                      SelectedValue="{Binding SESIONFORMULARIO.PELICULA, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedValuePath="PELICULA" />
+            <ComboBox
+                x:Name="peliculaComboBox"
+                DisplayMemberPath="TITULO"
+                ItemsSource="{Binding PELICULAS}"
+                SelectedItem="{Binding Path=SESIONFORMULARIO.PELICULA, UpdateSourceTrigger=PropertyChanged}"
+                SelectedValue="{Binding TITULO}"
+                SelectedValuePath="PELICULA" />
             <TextBlock Text="Sala" />
-            <ComboBox x:Name="salaComboBox"
-                      DisplayMemberPath="NUMERO"
-                      ItemsSource="{Binding SALAS}"
-                      SelectedValue="{Binding SESIONFORMULARIO.SALA, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedValuePath="SALA" />
+            <ComboBox
+                x:Name="salaComboBox"
+                DisplayMemberPath="NUMERO"
+                ItemsSource="{Binding SALAS}"
+                SelectedItem="{Binding Path=SESIONFORMULARIO.SALA, UpdateSourceTrigger=PropertyChanged}"
+                SelectedValue="{Binding NUMERO}"
+                SelectedValuePath="SALA" />
             <TextBlock Text="Hora" />
-            <TextBox x:Name="horaSesionTextBox"
-                     Text="{Binding SESIONFORMULARIO.HORA, UpdateSourceTrigger=PropertyChanged}" />
-            <StackPanel HorizontalAlignment="Center"
-                        Orientation="Horizontal">
-                <Button Command="local:CustomCommands.Cancelar"
-                        IsCancel="True"
-                        Content="Cancelar" />
-                <Button Command="local:CustomCommands.GuardarCambios"
-                        Content="Guardar" />
+            <TextBox x:Name="horaSesionTextBox" Text="{Binding SESIONFORMULARIO.HORA, UpdateSourceTrigger=PropertyChanged}" />
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button
+                    Command="local:CustomCommands.Cancelar"
+                    Content="Cancelar"
+                    IsCancel="True" />
+                <Button Command="local:CustomCommands.GuardarCambios" Content="Guardar" IsDefault="True"/>
             </StackPanel>
         </StackPanel>
     </Grid>

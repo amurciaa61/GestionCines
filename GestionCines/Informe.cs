@@ -46,7 +46,7 @@ namespace GestionCines
             switch (tipo)
             {
                 case "D":
-                    salida = $"{valor,10:F1}";
+                    salida = $"{valor,7:F1}";
                     break;
                 default:
                     break;

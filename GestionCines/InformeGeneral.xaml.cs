@@ -26,5 +26,10 @@ namespace GestionCines
             InitializeComponent();
             DataContext = _vm;
         }
+
+        private void CommandBinding_Executed_Filtrar(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.RefrescarFiltrado();
+        }
     }
 }

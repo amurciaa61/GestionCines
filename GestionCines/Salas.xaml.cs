@@ -24,7 +24,14 @@ namespace GestionCines
         {
             _vm = new SalasVM();
             InitializeComponent();
-            DataContext = _vm;
+            try
+            {
+                DataContext = _vm;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void CommandBinding_Executed_EditarSala(object sender, ExecutedRoutedEventArgs e)

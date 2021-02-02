@@ -92,5 +92,14 @@ namespace GestionCines
                 new KeyGesture(Key.V,ModifierKeys.Alt)
             }
             );
+        public static readonly RoutedUICommand Filtrar = new RoutedUICommand
+            ("Filtrar",
+            "Filtrar",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.S,ModifierKeys.Control)
+            }
+            );
     }
 }

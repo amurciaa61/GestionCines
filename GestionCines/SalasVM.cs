@@ -5,11 +5,11 @@ namespace GestionCines
 {
     public enum Modo
     {
-        Insertar,Actualizar
+        Insertar, Actualizar, Borrar
     }
     class SalasVM : INotifyPropertyChanged
     {
-        public Sala SALASELECCIONADA { get; set; } 
+        public Sala SALASELECCIONADA { get; set; }
         public Sala SALAFORMULARIO { get; set; }
         public ObservableCollection<Sala> SALAS { get; set; }
         public Modo ACCION { get; set; }
@@ -19,7 +19,7 @@ namespace GestionCines
         public SalasVM()
         {
             bbdd = new ServicioBaseDatos();
-            SALAS = bbdd.ObtenerSalas(false);
+            SALAS = bbdd.ObtenerSalas(false,false);
             SALAFORMULARIO = new Sala();
             ACCION = Modo.Insertar;
         }
@@ -50,7 +50,7 @@ namespace GestionCines
             else
                 bbdd.ActualizarSala(SALAFORMULARIO);
             SALAFORMULARIO = new Sala();
-            SALAS = bbdd.ObtenerSalas(false);
+            SALAS = bbdd.ObtenerSalas(false,false);
         }
         public void Cancelar()
         {

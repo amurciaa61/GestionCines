@@ -14,21 +14,23 @@ namespace GestionCines
         public ServicioBaseDatos()
         {
             conexion = new SqliteConnection("Data Source=cines.db");
-            FECHADELDIA = formatearFechaDelDia();
+            FECHADELDIA = FormatearFechaDelDia();
         }
-        public ObservableCollection<Sala> ObtenerSalas(bool soloDisponibles)
+        public ObservableCollection<Sala> ObtenerSalas(bool soloDisponibles, bool insertarFilaVacia)
         {
             ObservableCollection<Sala> salas = new ObservableCollection<Sala>();
+            if (insertarFilaVacia)
+                salas.Add(new Sala());
             conexion.Open();
             comando = conexion.CreateCommand();
-            comando.CommandText = "SELECT * from salas";
+            comando.CommandText = "SELECT * from salas ";
             // Si solo disponibles, además comprobaremos que no tengan más de MAX_SESIONES_POR_SALA
             if (soloDisponibles)
             {
-                comando.CommandText += " WHERE disponible = true " +
+                comando.CommandText += "WHERE disponible = true " +
                                        "and (select count(*) from sesiones where sala = idSala) < " + MAX_SESIONES_POR_SALA;
             }
-
+            comando.CommandText += " ORDER BY numero";
             SqliteDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
             {
@@ -95,24 +97,26 @@ namespace GestionCines
             conexion.Close();
             return existe;
         }
-        public string formatearFechaDelDia()
+        public string FormatearFechaDelDia()
         {
             DateTime hoy = DateTime.Today;
             return hoy.ToString("yyyy-MM-dd");
         }
         public bool ComprobarCargaPeliculas()
         {
-            bool cargadas = false;
-            conexion.Open();
-            comando = conexion.CreateCommand();
-            comando.CommandText = "SELECT fechacarga FROM cargapeliculas WHERE Date(fechacarga) = @fechacarga";
-            comando.Parameters.Add("@fechacarga", SqliteType.Text);
-            comando.Parameters["@fechacarga"].Value = FECHADELDIA;
-            string resultado = Convert.ToString(comando.ExecuteScalar());
-            if (resultado.Length > 0)
-                cargadas = true;
-            conexion.Close();
-            return cargadas;
+      
+                bool cargadas = false;
+                conexion.Open();
+                comando = conexion.CreateCommand();
+                comando.CommandText = "SELECT fechacarga FROM cargapeliculas WHERE Date(fechacarga) = @fechacarga";
+                comando.Parameters.Add("@fechacarga", SqliteType.Text);
+                comando.Parameters["@fechacarga"].Value = FECHADELDIA;
+                string resultado = Convert.ToString(comando.ExecuteScalar());
+                if (resultado.Length > 0)
+                    cargadas = true;
+                conexion.Close();
+                return cargadas;
+ 
         }
         public void InsertarControlCargaPeliculas()
         {
@@ -169,12 +173,14 @@ namespace GestionCines
             comando.ExecuteNonQuery();
             conexion.Close();
         }
-        public ObservableCollection<Pelicula> ObtenerPeliculas()
+        public ObservableCollection<Pelicula> ObtenerPeliculas(bool insertarFilaVacia)
         {
             ObservableCollection<Pelicula> peliculas = new ObservableCollection<Pelicula>();
+            if (insertarFilaVacia)
+                peliculas.Add(new Pelicula());
             conexion.Open();
             comando = conexion.CreateCommand();
-            comando.CommandText = "SELECT * FROM peliculas";
+            comando.CommandText = "SELECT * FROM peliculas ORDER BY titulo";
             SqliteDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
             {
@@ -197,7 +203,8 @@ namespace GestionCines
                                   "join peliculas p " +
                                   "on p.idPelicula = sesiones.pelicula " +
                                   "join salas s " +
-                                  "on sesiones.sala = s.idSala ";
+                                  "on sesiones.sala = s.idSala " +
+                                  "ORDER BY p.titulo,hora";
             SqliteDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
             {
@@ -206,6 +213,28 @@ namespace GestionCines
                     Pelicula pelicula = new Pelicula(lector.GetInt32(1), lector.GetString(2), lector.GetString(3), lector.GetInt32(4), lector.GetString(5), lector.GetString(6));
                     Sala sala = new Sala(lector.GetInt32(7), lector.GetString(8), lector.GetInt32(9), lector.GetBoolean(10));
                     sesiones.Add(new Sesion(lector.GetInt32(0), pelicula, sala, lector.GetString(11)));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return sesiones;
+        }
+
+        public ObservableCollection<string> ObtenerSesionesFiltro()
+        {
+            ObservableCollection<string> sesiones = new ObservableCollection<string>();
+            sesiones.Add("");
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "select hora from sesiones " +
+                                  "GROUP BY hora " +
+                                  "ORDER BY hora";
+            SqliteDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    sesiones.Add(lector.GetString(0));
                 }
             }
             lector.Close();
@@ -253,7 +282,7 @@ namespace GestionCines
             comando.ExecuteNonQuery();
             conexion.Close();
         }
-        public ObservableCollection<Informe> ObtenerInformeGeneral()
+        public ObservableCollection<Informe> ObtenerInformeGeneral(string pel)
         {
             ObservableCollection<Informe> listado = new ObservableCollection<Informe>();
             conexion.Open();
@@ -262,15 +291,16 @@ namespace GestionCines
                       "LEFT join sesiones se " +
                       "on p.idPelicula = se.pelicula " +
                       "LEFT join salas s " +
-                      "on se.sala = s.idSala " +
-                      "ORDER BY p.titulo,se.hora,se.sala";
+                      "on se.sala = s.idSala ";
+            comando.CommandText += pel+
+                      " ORDER BY p.titulo,se.hora,se.sala";
             SqliteDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
             {
                 Sala sala;
                 Pelicula pelicula;
-                string hora = "";
-                int ventas = 0;
+                string hora;
+                int ventas;
                 while (lector.Read())
                 {
                     pelicula = new Pelicula(lector.GetInt32(1), lector.GetString(2), lector.GetString(3), lector.GetInt32(4), lector.GetString(5), lector.GetString(6));
@@ -294,8 +324,6 @@ namespace GestionCines
             conexion.Close();
             return listado;
         }
-
-
         public bool PeliculaTieneSesiones(int iDpelicula)
         {
             int resultado;
@@ -339,12 +367,10 @@ namespace GestionCines
             SqliteDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
             {
-
                 while (lector.Read())
                 {
                     listado.Add(new Informe(lector.GetString(1),lector.GetString(0),lector.GetInt32(2), lector.GetInt32(3),
                                             lector.GetInt32(4), lector.GetString(5)));
-
                 }
             }
             lector.Close();
@@ -409,6 +435,27 @@ namespace GestionCines
             comando.Parameters["@pago"].Value = ventaFormulario.PAGO;
             comando.ExecuteNonQuery();
             conexion.Close();
+        }
+        public ObservableCollection<string> ObtenerDatosFiltro(string campo)
+        {
+            ObservableCollection<string> datos = new ObservableCollection<string>();
+            datos.Add("");
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "select "+campo+" from peliculas " +
+                      "GROUP BY 1 " +
+                      "ORDER BY 1";
+            SqliteDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    datos.Add(lector.GetString(0));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return datos;
         }
     }
 }

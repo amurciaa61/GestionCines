@@ -17,7 +17,7 @@ namespace GestionCines
     /// </summary>
     public partial class MainWindow : Window
     {
-        MainWindowVM _vm; 
+        private readonly MainWindowVM _vm; 
         public MainWindow()
         {
             // Instanciamos la clase VistaModelo
