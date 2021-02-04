@@ -78,16 +78,12 @@
             <ComboBox x:Name="peliculaComboBox"
                       DisplayMemberPath="TITULO"
                       ItemsSource="{Binding PELICULAS}"
-                      SelectedItem="{Binding Path=SESIONFORMULARIO.PELICULA, UpdateSourceTrigger=PropertyChanged}"
-                      
-                       />
+                      SelectedItem="{Binding Path=SESIONFORMULARIO.PELICULA, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Sala" />
             <ComboBox x:Name="salaComboBox"
                       DisplayMemberPath="NUMERO"
                       ItemsSource="{Binding SALAS}"
-                      SelectedItem="{Binding Path=SESIONFORMULARIO.SALA, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedValue="{Binding NUMERO}"
-                      SelectedValuePath="SALA" />
+                      SelectedItem="{Binding Path=SESIONFORMULARIO.SALA, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Hora" />
             <TextBox x:Name="horaSesionTextBox"
                      Text="{Binding SESIONFORMULARIO.HORA, UpdateSourceTrigger=PropertyChanged}" />
