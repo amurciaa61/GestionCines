@@ -22,6 +22,7 @@ namespace GestionCines
                 bbdd.EliminarControlesCargaPeliculas();
                 bbdd.EliminarCartelera();
                 bbdd.CargarPeliculas(PELICULAS);
+                bbdd.RestaurarSesiones();
             }
             else
             {

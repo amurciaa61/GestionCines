@@ -24,6 +24,10 @@ namespace GestionCines
         public Pelicula()
         {
         }
+        public Pelicula(int idPelicula)
+        {
+            ID = idPelicula;
+        }
 
         public Pelicula(int idPelicula, string titulo, string cartel, int año, string genero, string calificacion)
         {

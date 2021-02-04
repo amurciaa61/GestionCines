@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace GestionCines
 {
     class OfertaDisponible : INotifyPropertyChanged
     {
+        public string IMAGEN { get; set; }
         public string PELICULA { get; set; }
         public string HORA { get; set; }
         public int NUMERO { get; set; }
@@ -13,13 +12,14 @@ namespace GestionCines
         public int IDSESION { get; set; }
         public int CANTIDAD { get; set; }
         public string PAGO { get; set; }
-        public OfertaDisponible(string pelicula, string hora, int numero, int disponibilidad,int idSesion)
+        public OfertaDisponible(string pelicula, string hora, int numero, int disponibilidad,int idSesion,string imagen)
         {
             PELICULA = pelicula;
             HORA = hora;
             NUMERO = numero;
             DISPONIBILIDAD = disponibilidad;
             IDSESION = idSesion;
+            IMAGEN = imagen;
         }
 
         public OfertaDisponible(OfertaDisponible ofertadisponible)
@@ -31,6 +31,7 @@ namespace GestionCines
             IDSESION = ofertadisponible.IDSESION;
             PAGO = null;
             CANTIDAD = 0;
+            IMAGEN = ofertadisponible.IMAGEN;
 
         }
 

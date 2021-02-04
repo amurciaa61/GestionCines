@@ -5,10 +5,10 @@
         xmlns:local="clr-namespace:GestionCines"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="Venta de entradas"
-        Width="900"
-        Height="600"
-        MinWidth="900"
-        MinHeight="600"
+        Width="1000"
+        Height="650"
+        MinWidth="100"
+        MinHeight="650"
         Background="#74DDF8"
         ShowInTaskbar="False"
         mc:Ignorable="d">
@@ -45,6 +45,14 @@
                       ItemsSource="{Binding Path=OFERTA}"
                       SelectedItem="{Binding Path=VENTASELECCIONADA}">
                 <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="85"
+                                            Header="Imagen">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Path=IMAGEN}" Height="50" Width="45" Stretch="Fill"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Binding="{Binding Path=PELICULA}"
                                         Header="Película" />
                     <DataGridTextColumn Binding="{Binding Path=HORA}"

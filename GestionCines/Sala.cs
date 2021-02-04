@@ -14,7 +14,10 @@ namespace GestionCines
         {
             DISPONIBLE = true;
         }
-
+        public Sala(int iDSala)
+        {
+            IDSALA = iDSala;
+        }
         public Sala(int iDSala, string numero, int capacidad, bool disponible)
         {
             IDSALA = iDSala;

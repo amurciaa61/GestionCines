@@ -8,7 +8,7 @@ namespace GestionCines
     {
         const int MAX_SESIONES_POR_SALA = 3;
         private readonly SqliteConnection conexion;
-        public SqliteCommand comando;
+        public SqliteCommand comando,comando1,comando2;
         private string FECHADELDIA { get; set; }
 
         public ServicioBaseDatos()
@@ -104,19 +104,19 @@ namespace GestionCines
         }
         public bool ComprobarCargaPeliculas()
         {
-      
-                bool cargadas = false;
-                conexion.Open();
-                comando = conexion.CreateCommand();
-                comando.CommandText = "SELECT fechacarga FROM cargapeliculas WHERE Date(fechacarga) = @fechacarga";
-                comando.Parameters.Add("@fechacarga", SqliteType.Text);
-                comando.Parameters["@fechacarga"].Value = FECHADELDIA;
-                string resultado = Convert.ToString(comando.ExecuteScalar());
-                if (resultado.Length > 0)
-                    cargadas = true;
-                conexion.Close();
-                return cargadas;
- 
+
+            bool cargadas = false;
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "SELECT fechacarga FROM cargapeliculas WHERE Date(fechacarga) = @fechacarga";
+            comando.Parameters.Add("@fechacarga", SqliteType.Text);
+            comando.Parameters["@fechacarga"].Value = FECHADELDIA;
+            string resultado = Convert.ToString(comando.ExecuteScalar());
+            if (resultado.Length > 0)
+                cargadas = true;
+            conexion.Close();
+            return cargadas;
+
         }
         public void InsertarControlCargaPeliculas()
         {
@@ -167,6 +167,28 @@ namespace GestionCines
             comando = conexion.CreateCommand();
             comando.CommandText = "DELETE FROM ventas";
             comando.ExecuteNonQuery();
+            // Copiamos sesiones a sesionescopia
+            comando.CommandText = "SELECT * FROM sesiones";
+            SqliteDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                comando1 = conexion.CreateCommand();
+                comando1.Parameters.Add("@idSesion", SqliteType.Integer);
+                comando1.Parameters.Add("@pelicula", SqliteType.Integer);
+                comando1.Parameters.Add("@sala", SqliteType.Integer);
+                comando1.Parameters.Add("@hora", SqliteType.Text);
+                while (lector.Read())
+                {
+                    comando1.CommandText = "INSERT INTO sesionescopia VALUES(@idSesion,@pelicula,@sala,@hora)";
+                    comando1.Parameters["@idSesion"].Value = lector.GetInt32(0);
+                    comando1.Parameters["@pelicula"].Value = lector.GetInt32(1);
+                    comando1.Parameters["@sala"].Value = lector.GetInt32(2);
+                    comando1.Parameters["@hora"].Value = lector.GetString(3);
+                    comando1.ExecuteNonQuery();
+                }
+            }
+            lector.Close();
+            // Borramos sesiones
             comando.CommandText = "DELETE FROM sesiones";
             comando.ExecuteNonQuery();
             comando.CommandText = "DELETE FROM peliculas";
@@ -255,6 +277,52 @@ namespace GestionCines
             comando.ExecuteNonQuery();
             conexion.Close();
         }
+        // restauramos las sesiones tras la eliminación de la cartelera
+        public void RestaurarSesiones()
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "select * FROM sesionescopia";
+            SqliteDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                comando1 = conexion.CreateCommand();
+                comando1.Parameters.Add("@idSesion", SqliteType.Integer);
+                comando1.Parameters.Add("@pelicula", SqliteType.Integer);
+                comando1.Parameters.Add("@sala", SqliteType.Integer);
+                comando1.Parameters.Add("@hora", SqliteType.Text);
+                while (lector.Read())
+                {
+                    if (ExistePelicula(lector.GetInt32(1)))
+                    {
+                        comando1.CommandText = "INSERT INTO sesiones VALUES(@idSesion,@pelicula,@sala,@hora)";
+                        comando1.Parameters["@idSesion"].Value = lector.GetInt32(0);
+                        comando1.Parameters["@pelicula"].Value = lector.GetInt32(1);
+                        comando1.Parameters["@sala"].Value = lector.GetInt32(2);
+                        comando1.Parameters["@hora"].Value = lector.GetString(3);
+                        comando1.ExecuteNonQuery();
+                    }
+                }
+            }
+            lector.Close();
+            // Borramos copia de sesiones
+            comando.CommandText = "DELETE FROM sesionescopia";
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+        public bool ExistePelicula(int id)
+        {
+            bool existe = false;
+            comando2 = conexion.CreateCommand();
+            comando2.CommandText = "select * FROM sesionescopia";
+            SqliteDataReader lector = comando2.ExecuteReader();
+            if (lector.HasRows)
+            {
+                existe = true;
+            }
+            lector.Close();
+            return existe;
+        }
         public void ActualizarSesion(Sesion sesionFormulario)
         {
             conexion.Open();
@@ -292,7 +360,7 @@ namespace GestionCines
                       "on p.idPelicula = se.pelicula " +
                       "LEFT join salas s " +
                       "on se.sala = s.idSala ";
-            comando.CommandText += filtro+
+            comando.CommandText += filtro +
                       " ORDER BY p.titulo,se.hora,se.sala";
             SqliteDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
@@ -369,7 +437,7 @@ namespace GestionCines
             {
                 while (lector.Read())
                 {
-                    listado.Add(new Informe(lector.GetString(1),lector.GetString(0),lector.GetInt32(2), lector.GetInt32(3),
+                    listado.Add(new Informe(lector.GetString(1), lector.GetString(0), lector.GetInt32(2), lector.GetInt32(3),
                                             lector.GetInt32(4), lector.GetString(5)));
                 }
             }
@@ -397,7 +465,7 @@ namespace GestionCines
                     int disponibilidad = capacidad - ObtenerVentasPorSesion(lector.GetInt32(11)); // entradas disponibles en la sesion
                     if (disponibilidad > 0)
                         ofertas.Add(new OfertaDisponible(lector.GetString(2), lector.GetString(0), lector.GetInt32(8),
-                                                         disponibilidad, lector.GetInt32(11)));
+                                                         disponibilidad, lector.GetInt32(11), lector.GetString(3)));
                 }
             }
             lector.Close();
@@ -442,7 +510,7 @@ namespace GestionCines
             datos.Add("");
             conexion.Open();
             comando = conexion.CreateCommand();
-            comando.CommandText = "select "+campo+" from peliculas " +
+            comando.CommandText = "select " + campo + " from peliculas " +
                       "GROUP BY 1 " +
                       "ORDER BY 1";
             SqliteDataReader lector = comando.ExecuteReader();
