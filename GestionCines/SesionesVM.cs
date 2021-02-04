@@ -15,6 +15,8 @@ namespace GestionCines
         public ObservableCollection<Sesion> SESIONES { get; set; }
         public ObservableCollection<Pelicula> PELICULAS { get; set; }
         public ObservableCollection<Sala> SALAS { get; set; }
+        public ObservableCollection<string> HORAS { get; set; }
+
         public Modo ACCION { get; set; }
 
         private readonly ServicioBaseDatos bbdd;
@@ -76,7 +78,9 @@ namespace GestionCines
             SESIONFORMULARIO = new Sesion();
             SESIONES = bbdd.ObtenerSesiones();
             SALAS = bbdd.ObtenerSalas(true,false);
+            HORAS = bbdd.ObtenerHoras(false);
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

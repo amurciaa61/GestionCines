@@ -282,7 +282,7 @@ namespace GestionCines
             comando.ExecuteNonQuery();
             conexion.Close();
         }
-        public ObservableCollection<Informe> ObtenerInformeGeneral(string pel)
+        public ObservableCollection<Informe> ObtenerInformeGeneral(string filtro)
         {
             ObservableCollection<Informe> listado = new ObservableCollection<Informe>();
             conexion.Open();
@@ -292,7 +292,7 @@ namespace GestionCines
                       "on p.idPelicula = se.pelicula " +
                       "LEFT join salas s " +
                       "on se.sala = s.idSala ";
-            comando.CommandText += pel+
+            comando.CommandText += filtro+
                       " ORDER BY p.titulo,se.hora,se.sala";
             SqliteDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
@@ -456,6 +456,27 @@ namespace GestionCines
             lector.Close();
             conexion.Close();
             return datos;
+        }
+        public ObservableCollection<string> ObtenerHoras(bool insertarFilaVacia)
+        {
+            ObservableCollection<string> horas = new ObservableCollection<string>();
+            if (insertarFilaVacia)
+                horas.Add("");
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "select hora from horas " +
+                      "ORDER BY 1";
+            SqliteDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    horas.Add(lector.GetString(0));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return horas;
         }
     }
 }

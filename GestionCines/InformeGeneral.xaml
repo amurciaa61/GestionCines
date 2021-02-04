@@ -5,10 +5,10 @@
         xmlns:local="clr-namespace:GestionCines"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="Informe General"
-        Width="950"
-        Height="700"
-        MinWidth="950"
-        MinHeight="700"
+        Width="1100"
+        Height="750"
+        MinWidth="1100"
+        MinHeight="750"
         Background="#74DDF8"
         ShowInTaskbar="False"
         mc:Ignorable="d">
@@ -36,10 +36,10 @@
                 <DataGridTextColumn Width="250"
                                     Binding="{Binding Path=PELICULA.TITULO}"
                                     Header="Película" />
-                <DataGridTextColumn Width="60"
+                <DataGridTextColumn Width="80"
                                     Binding="{Binding Path=HORA}"
                                     Header="Hora" />
-                <DataGridTextColumn Width="50"
+                <DataGridTextColumn Width="70"
                                     Binding="{Binding Path=SALA.NUMERO}"
                                     Header="Sala" />
                 <DataGridTextColumn Binding="{Binding Path=DISPONIBILIDAD}"
@@ -47,12 +47,12 @@
                 <DataGridTextColumn Width="80"
                                     Binding="{Binding Path=VENTAS}"
                                     Header="Ventas" />
-                <DataGridTextColumn Width="70"
+                <DataGridTextColumn Width="90"
                                     Binding="{Binding Path=PORCENTAJEOCUPACION}"
                                     Header="% Venta" />
                 <DataGridTextColumn Binding="{Binding Path=SALA.CAPACIDAD}"
                                     Header="Capacidad" />
-                <DataGridTextColumn Width="50"
+                <DataGridTextColumn Width="70"
                                     Binding="{Binding Path=PELICULA.AÑO}"
                                     Header="Año" />
                 <DataGridTextColumn Binding="{Binding Path=PELICULA.GENERO}"

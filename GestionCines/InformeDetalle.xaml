@@ -30,15 +30,15 @@
                     Binding="{Binding Path=TITULO}"
                     Header="Película" />
                 <DataGridTextColumn
-                    Width="60"
+                    Width="80"
                     Binding="{Binding Path=HORA}"
                     Header="Hora" />
                 <DataGridTextColumn
-                    Width="40"
+                    Width="80"
                     Binding="{Binding Path=NUMERO}"
                     Header="Sala" />
                 <DataGridTextColumn Binding="{Binding Path=TICKET}"
-                                    Width="70"
+                                    Width="80"
                                     Header="Ticket" />
                 <DataGridTextColumn Binding="{Binding Path=CANTIDAD}" Header="Ventas" />
                 <DataGridTextColumn Binding="{Binding Path=PAGO}" Header="Forma de pago" />

@@ -4,52 +4,62 @@
              xmlns:local="clr-namespace:GestionCines"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
-        <!--  DataGrid  -->
-        <Style TargetType="DataGrid">
-            <Setter Property="FontSize"
-                    Value="15" />
-        </Style>
-        <!--  Botones  -->
-        <Style TargetType="Button">
-            <Setter Property="Width"
-                    Value="100" />
-            <Setter Property="Margin"
-                    Value="10,0,10,0" />
-        </Style>
-        <!--  TextBox y TextBlock  -->
-        <Style TargetType="TextBox">
-            <Setter Property="Margin"
-                    Value="0,0,0,10" />
-            <Setter Property="FontSize"
-                    Value="20" />
-        </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="Margin"
-                    Value="0,0,0,5" />
-        </Style>
-        <!--  StackPanel de edicion  -->
-        <Style x:Key="StackPanelEdicion"
-               TargetType="StackPanel">
-            <Setter Property="Margin"
-                    Value="10" />
-            <Setter Property="Orientation"
-                    Value="Vertical" />
-        </Style>
-        <!--  StackPanel botonones Bottom  -->
-        <Style x:Key="StackPanelBottom"
-               TargetType="StackPanel">
-            <Setter Property="Margin"
-                    Value="0,0,0,10" />
-            <Setter Property="HorizontalAlignment"
-                    Value="Center" />
-            <Setter Property="Orientation"
-                    Value="Horizontal" />
-        </Style>
-        <!--  ComboBox  -->
-        <Style TargetType="ComboBox">
-            <Setter Property="Margin"
-                    Value="0,0,0,10" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <!--  DataGrid  -->
+            <Style TargetType="DataGrid">
+                <Setter Property="FontSize"
+                        Value="15" />
+            </Style>
+            <!--  Botones  -->
+            <Style TargetType="Button">
+                <Setter Property="Width"
+                        Value="100" />
+                <Setter Property="Margin"
+                        Value="10,0,10,0" />
+            </Style>
+            <!--  TextBox y TextBlock  -->
+            <Style TargetType="TextBox">
+                <Setter Property="Margin"
+                        Value="0,0,0,10" />
+                <Setter Property="FontSize"
+                        Value="20" />
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin"
+                        Value="0,0,0,5" />
+            </Style>
+            <!--  StackPanel de edicion  -->
+            <Style x:Key="StackPanelEdicion"
+                   TargetType="StackPanel">
+                <Setter Property="Margin"
+                        Value="10" />
+                <Setter Property="Orientation"
+                        Value="Vertical" />
+            </Style>
+            <!--  StackPanel botonones Bottom  -->
+            <Style x:Key="StackPanelBottom"
+                   TargetType="StackPanel">
+                <Setter Property="Margin"
+                        Value="0,0,0,10" />
+                <Setter Property="HorizontalAlignment"
+                        Value="Center" />
+                <Setter Property="Orientation"
+                        Value="Horizontal" />
+            </Style>
+            <!--  ComboBox  -->
+            <Style TargetType="ComboBox">
+                <Setter Property="Margin"
+                        Value="0,0,0,10" />
+                <Setter Property="FontSize"
+                        Value="15" />
+            </Style>
+        </ResourceDictionary>
+    
     </Application.Resources>
 </Application>
