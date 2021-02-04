@@ -25,7 +25,7 @@ namespace GestionCines
             }
             else
             {
-                PELICULAS = bbdd.ObtenerPeliculas();
+                PELICULAS = bbdd.ObtenerPeliculas(false);
             }
         }
 

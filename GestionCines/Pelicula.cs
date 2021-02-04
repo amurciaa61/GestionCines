@@ -11,6 +11,16 @@ namespace GestionCines
         public string GENERO { get; set; }
         public string CALIFICACION { get; set; }
 
+        public Pelicula(Pelicula pelicula)
+        {
+            ID = pelicula.ID;
+            TITULO = pelicula.TITULO;
+            CARTEL = pelicula.CARTEL;
+            AÑO = pelicula.AÑO;
+            GENERO = pelicula.GENERO;
+            CALIFICACION = pelicula.CALIFICACION;
+        }
+
         public Pelicula()
         {
         }
@@ -24,6 +34,7 @@ namespace GestionCines
             GENERO = genero;
             CALIFICACION = calificacion;
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

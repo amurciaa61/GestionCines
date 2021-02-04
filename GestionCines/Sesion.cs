@@ -23,8 +23,8 @@ namespace GestionCines
         public Sesion(Sesion sesion)
         {
             IDSESION = sesion.IDSESION;
-            PELICULA = sesion.PELICULA;
-            SALA = sesion.SALA;
+            PELICULA = new Pelicula(sesion.PELICULA);
+            SALA = new Sala(sesion.SALA);
             HORA = sesion.HORA;
         }
 
