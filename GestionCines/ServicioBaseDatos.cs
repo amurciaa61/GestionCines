@@ -167,28 +167,9 @@ namespace GestionCines
             comando = conexion.CreateCommand();
             comando.CommandText = "DELETE FROM ventas";
             comando.ExecuteNonQuery();
-            // Copiamos sesiones a sesionescopia
-            comando.CommandText = "SELECT * FROM sesiones";
-            SqliteDataReader lector = comando.ExecuteReader();
-            if (lector.HasRows)
-            {
-                comando1 = conexion.CreateCommand();
-                comando1.Parameters.Add("@idSesion", SqliteType.Integer);
-                comando1.Parameters.Add("@pelicula", SqliteType.Integer);
-                comando1.Parameters.Add("@sala", SqliteType.Integer);
-                comando1.Parameters.Add("@hora", SqliteType.Text);
-                while (lector.Read())
-                {
-                    comando1.CommandText = "INSERT INTO sesionescopia VALUES(@idSesion,@pelicula,@sala,@hora)";
-                    comando1.Parameters["@idSesion"].Value = lector.GetInt32(0);
-                    comando1.Parameters["@pelicula"].Value = lector.GetInt32(1);
-                    comando1.Parameters["@sala"].Value = lector.GetInt32(2);
-                    comando1.Parameters["@hora"].Value = lector.GetString(3);
-                    comando1.ExecuteNonQuery();
-                }
-            }
-            lector.Close();
-            // Borramos sesiones
+            // Copiamos sesiones a sesionescopia para luego recuperarlas
+            comando.CommandText = "INSERT INTO sesionescopia SELECT * FROM sesiones";
+            comando.ExecuteNonQuery();
             comando.CommandText = "DELETE FROM sesiones";
             comando.ExecuteNonQuery();
             comando.CommandText = "DELETE FROM peliculas";
@@ -232,9 +213,10 @@ namespace GestionCines
             {
                 while (lector.Read())
                 {
-                    Pelicula pelicula = new Pelicula(lector.GetInt32(1), lector.GetString(2), lector.GetString(3), lector.GetInt32(4), lector.GetString(5), lector.GetString(6));
-                    Sala sala = new Sala(lector.GetInt32(7), lector.GetString(8), lector.GetInt32(9), lector.GetBoolean(10));
-                    sesiones.Add(new Sesion(lector.GetInt32(0), pelicula, sala, lector.GetString(11)));
+                    sesiones.Add(new Sesion(lector.GetInt32(0), 
+                        new Pelicula(lector.GetInt32(1), lector.GetString(2), lector.GetString(3), lector.GetInt32(4), lector.GetString(5), lector.GetString(6)), 
+                        new Sala(lector.GetInt32(7), lector.GetString(8), lector.GetInt32(9), lector.GetBoolean(10)), 
+                        lector.GetString(11)));
                 }
             }
             lector.Close();
@@ -277,51 +259,20 @@ namespace GestionCines
             comando.ExecuteNonQuery();
             conexion.Close();
         }
-        // restauramos las sesiones tras la eliminación de la cartelera
+        // restauramos las sesiones desde sesionescopia tras la eliminación de la cartelera
         public void RestaurarSesiones()
         {
             conexion.Open();
             comando = conexion.CreateCommand();
-            comando.CommandText = "select * FROM sesionescopia";
-            SqliteDataReader lector = comando.ExecuteReader();
-            if (lector.HasRows)
-            {
-                comando1 = conexion.CreateCommand();
-                comando1.Parameters.Add("@idSesion", SqliteType.Integer);
-                comando1.Parameters.Add("@pelicula", SqliteType.Integer);
-                comando1.Parameters.Add("@sala", SqliteType.Integer);
-                comando1.Parameters.Add("@hora", SqliteType.Text);
-                while (lector.Read())
-                {
-                    if (ExistePelicula(lector.GetInt32(1)))
-                    {
-                        comando1.CommandText = "INSERT INTO sesiones VALUES(@idSesion,@pelicula,@sala,@hora)";
-                        comando1.Parameters["@idSesion"].Value = lector.GetInt32(0);
-                        comando1.Parameters["@pelicula"].Value = lector.GetInt32(1);
-                        comando1.Parameters["@sala"].Value = lector.GetInt32(2);
-                        comando1.Parameters["@hora"].Value = lector.GetString(3);
-                        comando1.ExecuteNonQuery();
-                    }
-                }
-            }
-            lector.Close();
+            comando.CommandText = "INSERT INTO sesiones SELECT * FROM sesionescopia " +
+                                  "WHERE EXISTS " +
+                                  "(SELECT * FROM peliculas " +
+                                  "WHERE pelicula = idpelicula) ";
+            comando.ExecuteNonQuery();
             // Borramos copia de sesiones
             comando.CommandText = "DELETE FROM sesionescopia";
             comando.ExecuteNonQuery();
             conexion.Close();
-        }
-        public bool ExistePelicula(int id)
-        {
-            bool existe = false;
-            comando2 = conexion.CreateCommand();
-            comando2.CommandText = "select * FROM sesionescopia";
-            SqliteDataReader lector = comando2.ExecuteReader();
-            if (lector.HasRows)
-            {
-                existe = true;
-            }
-            lector.Close();
-            return existe;
         }
         public void ActualizarSesion(Sesion sesionFormulario)
         {
