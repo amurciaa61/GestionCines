@@ -38,11 +38,14 @@
             <StackPanel DockPanel.Dock="Bottom"
                         Style="{StaticResource StackPanelBottom}">
                 <Button Command="local:CustomCommands.Borrar"
-                        Content="Borrar" />
+                        Content="Borrar"
+                        ToolTip="Eliminar registro seleccionado" />
                 <Button Command="local:CustomCommands.Editar"
-                        Content="Editar" />
+                        Content="Editar"
+                        ToolTip="Modificar registro seleccionado" />
                 <Button Command="local:CustomCommands.Insertar"
-                        Content="Añadir" />
+                        Content="Añadir"
+                        ToolTip="Insertar un nuevo registro" />
             </StackPanel>
             <DataGrid x:Name="sesionesDataGrid"
                       Margin="10,10,0,10"
@@ -92,10 +95,12 @@
                         Orientation="Horizontal">
                 <Button Command="local:CustomCommands.Cancelar"
                         Content="Cancelar"
-                        IsCancel="True" />
+                        IsCancel="True"
+                        ToolTip="Cancelar cambios" />
                 <Button Command="local:CustomCommands.GuardarCambios"
                         Content="Guardar"
-                        IsDefault="True" />
+                        IsDefault="True"
+                        ToolTip="Guardar cambios" />
             </StackPanel>
             
         </StackPanel>

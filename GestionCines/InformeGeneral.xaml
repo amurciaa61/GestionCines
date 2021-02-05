@@ -6,12 +6,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="Informe General"
         Width="1100"
-        Height="750"
+        Height="700"
         MinWidth="1100"
-        MinHeight="750"
+        MinHeight="700"
         Background="#74DDF8"
         ShowInTaskbar="False"
-        mc:Ignorable="d">
+        mc:Ignorable="d" Top="10" Left="100">
     <Window.CommandBindings>
         <CommandBinding Command="local:CustomCommands.Filtrar"
                         Executed="CommandBinding_Executed_Filtrar" />
@@ -119,7 +119,8 @@
             <Button Grid.Row="1"
                     Grid.Column="5"
                     Margin="0,0,0,10"
-                    Command="local:CustomCommands.Filtrar">Filtrar</Button>
+                    Command="local:CustomCommands.Filtrar"
+                    ToolTip="Realizar nueva consulta">Filtrar</Button>
         </Grid>
     </Grid>
 </Window>

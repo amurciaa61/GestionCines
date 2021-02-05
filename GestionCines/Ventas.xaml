@@ -11,7 +11,7 @@
         MinHeight="650"
         Background="#74DDF8"
         ShowInTaskbar="False"
-        mc:Ignorable="d">
+        mc:Ignorable="d" Left="150" Top="20">
     <Window.CommandBindings>
         <CommandBinding CanExecute="CommandBinding_CanExecute_Cancelar"
                         Command="local:CustomCommands.Cancelar"
@@ -31,7 +31,8 @@
         <DockPanel Grid.Column="0">
             <StackPanel DockPanel.Dock="Bottom"
                         Style="{StaticResource StackPanelBottom}">
-                <Button Command="local:CustomCommands.Insertar">Venta</Button>
+                <Button Command="local:CustomCommands.Insertar"
+                        ToolTip="Realizar venta">Venta</Button>
             </StackPanel>
             <DataGrid x:Name="ventasDataGrid"
                       Margin="10,10,0,10"
@@ -92,9 +93,11 @@
             <StackPanel HorizontalAlignment="Center"
                         Orientation="Horizontal">
                 <Button Command="local:CustomCommands.Cancelar"
-                        IsCancel="True">Cancelar</Button>
+                        IsCancel="True"
+                        ToolTip="Cancelar cambios">Cancelar</Button>
                 <Button Command="local:CustomCommands.GuardarCambios"
-                        IsDefault="True">Guardar</Button>
+                        IsDefault="True"
+                        ToolTip="Guardar cambios">Guardar</Button>
             </StackPanel>
         </StackPanel>
     </Grid>
