@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionCines", "GestionCines\GestionCines.csproj", "{1F70A36C-B3B8-4931-B7D0-AB5BC6FE7F83}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DeCine", "DeCine\DeCine.vdproj", "{E5AC0568-DE1A-4BD6-B730-A4878AABBEEB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,8 +15,6 @@ Global
 		{1F70A36C-B3B8-4931-B7D0-AB5BC6FE7F83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F70A36C-B3B8-4931-B7D0-AB5BC6FE7F83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F70A36C-B3B8-4931-B7D0-AB5BC6FE7F83}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E5AC0568-DE1A-4BD6-B730-A4878AABBEEB}.Debug|Any CPU.ActiveCfg = Debug
-		{E5AC0568-DE1A-4BD6-B730-A4878AABBEEB}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
