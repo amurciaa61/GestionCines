@@ -15,6 +15,8 @@ namespace GestionCines
         public ObservableCollection<Sesion> SESIONES { get; set; }
         public ObservableCollection<Pelicula> PELICULAS { get; set; }
         public ObservableCollection<Sala> SALAS { get; set; }
+        public ObservableCollection<string> TITULOS { get; set; }
+        public ObservableCollection<string> SALANUMERO { get; set; }
         public ObservableCollection<string> HORAS { get; set; }
 
         public Modo ACCION { get; set; }
@@ -24,8 +26,8 @@ namespace GestionCines
         public SesionesVM()
         {
             bbdd = new ServicioBaseDatos();
-            InicializarVariables();
             PELICULAS = bbdd.ObtenerPeliculas(false);
+            InicializarVariables();
             ACCION = Modo.Insertar;
         }
         public void AñadirSesion()
@@ -53,12 +55,14 @@ namespace GestionCines
         {
             return SESIONFORMULARIO.HORA != "" &&
                    SESIONFORMULARIO.HORA != null &&
-                   SESIONFORMULARIO.PELICULA != null &&
-                   SESIONFORMULARIO.SALA != null &&
+                   SESIONFORMULARIO.TITULOPELICULA != null &&
+                   SESIONFORMULARIO.NUMEROSALA != null &&
                    ACCION != Modo.Borrar;
         }
         public void GuardarCambios()
         {
+            SESIONFORMULARIO.SALA = bbdd.ObtenerSalaPorNumero(SESIONFORMULARIO.NUMEROSALA);
+            SESIONFORMULARIO.PELICULA = bbdd.ObtenerPeliculaPorTitulo(SESIONFORMULARIO.TITULOPELICULA);
             if (ACCION == Modo.Insertar)
                 bbdd.InsertarSesion(SESIONFORMULARIO);
             else
@@ -77,8 +81,20 @@ namespace GestionCines
         {
             SESIONFORMULARIO = new Sesion();
             SESIONES = bbdd.ObtenerSesiones();
-            SALAS = bbdd.ObtenerSalas(true,false);
+           
+            SALAS = bbdd.ObtenerSalas(true, false);
             HORAS = bbdd.ObtenerHoras(false);
+            SALANUMERO = new ObservableCollection<string>();
+            foreach (Sala salas in SALAS)
+            {
+                SALANUMERO.Add(salas.NUMERO);
+            }
+            TITULOS = new ObservableCollection<string>();
+            foreach (Pelicula peliculas in PELICULAS)
+            {
+                TITULOS.Add(peliculas.TITULO);
+            }
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -50,7 +50,7 @@
                 <Setter Property="Orientation"
                         Value="Vertical" />
             </Style>
-            <!--  StackPanel botonones Bottom  -->
+            <!--  StackPanel botones Bottom  -->
             <Style x:Key="StackPanelBottom"
                    TargetType="StackPanel">
                 <Setter Property="Margin"

@@ -39,7 +39,7 @@
                 <DataGridTextColumn Width="80"
                                     Binding="{Binding Path=HORA}"
                                     Header="Hora" />
-                <DataGridTextColumn Width="70"
+                <DataGridTextColumn Width="75"
                                     Binding="{Binding Path=SALA.NUMERO}"
                                     Header="Sala" />
                 <DataGridTextColumn Binding="{Binding Path=DISPONIBILIDAD}"

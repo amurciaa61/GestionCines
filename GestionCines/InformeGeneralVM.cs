@@ -42,11 +42,11 @@ namespace GestionCines
                 condicion_filtro += " AND p.idPelicula = '" + PELICULASELECCIONADA.ID + "'";
             if (SALASELECCIONADA.IDSALA != 0)
                 condicion_filtro += " AND s.idSala = '" + SALASELECCIONADA.IDSALA + "'";
-            if (SESIONSELECCIONADA.Length > 0)
+            if (SESIONSELECCIONADA.Length > 0 && SESIONSELECCIONADA != "Todas") 
                 condicion_filtro += " AND se.hora = '" + SESIONSELECCIONADA + "'";
-            if (CALIFICACIONSELECCIONADA.Length > 0)
+            if (CALIFICACIONSELECCIONADA.Length > 0 && CALIFICACIONSELECCIONADA != "Todas")
                 condicion_filtro += " AND p.calificacion = '" + CALIFICACIONSELECCIONADA + "'";
-            if (GENEROSELECCIONADA.Length > 0)
+            if (GENEROSELECCIONADA.Length > 0 && GENEROSELECCIONADA != "Todas")
                 condicion_filtro += " AND p.genero = '" + GENEROSELECCIONADA + "'";
             LISTA = bbdd.ObtenerInformeGeneral(condicion_filtro);
         }

@@ -61,10 +61,10 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding IDSESION}"
                                         Header="ID" />
-                    <DataGridTextColumn Binding="{Binding PELICULA.TITULO}"
+                    <DataGridTextColumn Binding="{Binding TITULOPELICULA}"
                                         Header="Película"
                                         Width="300" />
-                    <DataGridTextColumn Binding="{Binding SALA.NUMERO}"
+                    <DataGridTextColumn Binding="{Binding NUMEROSALA}"
                                         Header="Sala" />
                     <DataGridTextColumn Binding="{Binding HORA}"
                                         Header="Hora" />
@@ -79,18 +79,16 @@
                      Text="{Binding SESIONFORMULARIO.IDSESION, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Pelicula" />
             <ComboBox x:Name="peliculaComboBox"
-                      DisplayMemberPath="TITULO"
-                      ItemsSource="{Binding PELICULAS}"
-                      SelectedItem="{Binding Path=SESIONFORMULARIO.PELICULA, UpdateSourceTrigger=PropertyChanged}" />
+                      ItemsSource="{Binding TITULOS}"
+                      SelectedItem="{Binding Path=SESIONFORMULARIO.TITULOPELICULA, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Sala" />
             <ComboBox x:Name="salaComboBox"
-                      DisplayMemberPath="NUMERO"
-                      ItemsSource="{Binding SALAS}"
-                      SelectedItem="{Binding Path=SESIONFORMULARIO.SALA, UpdateSourceTrigger=PropertyChanged}" />
+                      ItemsSource="{Binding SALANUMERO}"
+                      SelectedItem="{Binding Path=SESIONFORMULARIO.NUMEROSALA, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Hora" />
             <ComboBox x:Name="horaComboBox"
-                      ItemsSource="{Binding HORAS}" 
-                      SelectedItem = "{Binding Path=SESIONFORMULARIO.HORA, UpdateSourceTrigger=PropertyChanged}"/>
+                      ItemsSource="{Binding HORAS}"
+                      SelectedItem="{Binding Path=SESIONFORMULARIO.HORA, UpdateSourceTrigger=PropertyChanged}" />
             <StackPanel HorizontalAlignment="Center"
                         Orientation="Horizontal">
                 <Button Command="local:CustomCommands.Cancelar"
@@ -102,7 +100,6 @@
                         IsDefault="True"
                         ToolTip="Guardar cambios" />
             </StackPanel>
-            
         </StackPanel>
     </Grid>
 </Window>

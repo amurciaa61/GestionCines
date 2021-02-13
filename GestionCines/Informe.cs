@@ -11,7 +11,7 @@ namespace GestionCines
         public Sesion SESION { get; set; }
         public Venta VENTA { get; set; }
         public Sala SALA { get; set; }
-        public int NUMERO { get; set; }
+        public string NUMERO { get; set; }
         public int TICKET { get; set; }
         public int DISPONIBILIDAD { get; set; }
         public int CANTIDAD { get; set; }
@@ -31,7 +31,7 @@ namespace GestionCines
             PORCENTAJEOCUPACION = FormatearValor(porcentaje,"D");
         }
         // Informe Detalle
-        public Informe(string titulo,string hora,int numero,int ticket,int cantidad,string pago)
+        public Informe(string titulo,string hora,string numero,int ticket,int cantidad,string pago)
         {
             HORA = hora;
             TITULO = titulo;

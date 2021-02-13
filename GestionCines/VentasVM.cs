@@ -25,7 +25,9 @@ namespace GestionCines
         }
         public void AñadirVenta()
         {
+          
             VENTAFORMULARIO = new OfertaDisponible(VENTASELECCIONADA);
+            
         }
         public bool HayOfertaDisponibleSeleccionada()
         {

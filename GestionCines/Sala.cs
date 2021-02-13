@@ -2,7 +2,7 @@
 
 namespace GestionCines
 {
-    class Sala : INotifyPropertyChanged
+    class Sala : INotifyPropertyChanged 
     {
         
         public int IDSALA { get; set; }
@@ -31,5 +31,7 @@ namespace GestionCines
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+
     }
 }

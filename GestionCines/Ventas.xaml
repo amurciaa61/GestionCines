@@ -83,13 +83,14 @@
             <TextBox IsReadOnly="True"
                      Text="{Binding Path=VENTAFORMULARIO.DISPONIBILIDAD}" />
             <TextBlock Text="Cantidad" />
-            <TextBox Text="{Binding Path=VENTAFORMULARIO.CANTIDAD, UpdateSourceTrigger=PropertyChanged}"
-                     ToolTip="No puede ser superior a las entradas disponibles" />
+            <TextBox Name="cantidadTextBox"
+                     Text="{Binding Path=VENTAFORMULARIO.CANTIDAD, UpdateSourceTrigger=PropertyChanged}"
+                     ToolTip="No puede ser superior a las entradas disponibles"/>
             <TextBlock Text="Forma de pago" />
             <ComboBox x:Name="pagoComboBox"
                       ItemsSource="{Binding Path=PAGO}"
-                      SelectedIndex="1"
-                      SelectedValue="{Binding Path=VENTAFORMULARIO.PAGO, UpdateSourceTrigger=PropertyChanged}" />
+                      SelectedValue="PAGO"
+                      SelectedItem="{Binding Path=VENTAFORMULARIO.PAGO , UpdateSourceTrigger=PropertyChanged}" />
             <StackPanel HorizontalAlignment="Center"
                         Orientation="Horizontal">
                 <Button Command="local:CustomCommands.Cancelar"

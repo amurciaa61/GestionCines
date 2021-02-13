@@ -7,12 +7,12 @@ namespace GestionCines
         public string IMAGEN { get; set; }
         public string PELICULA { get; set; }
         public string HORA { get; set; }
-        public int NUMERO { get; set; }
+        public string NUMERO { get; set; }
         public int DISPONIBILIDAD { get; set; }
         public int IDSESION { get; set; }
         public int CANTIDAD { get; set; }
         public string PAGO { get; set; }
-        public OfertaDisponible(string pelicula, string hora, int numero, int disponibilidad,int idSesion,string imagen)
+        public OfertaDisponible(string pelicula, string hora, string numero, int disponibilidad,int idSesion,string imagen)
         {
             PELICULA = pelicula;
             HORA = hora;
@@ -29,7 +29,7 @@ namespace GestionCines
             NUMERO = ofertadisponible.NUMERO;
             DISPONIBILIDAD = ofertadisponible.DISPONIBILIDAD;
             IDSESION = ofertadisponible.IDSESION;
-            PAGO = null;
+            PAGO = "Efectivo";
             CANTIDAD = 0;
             IMAGEN = ofertadisponible.IMAGEN;
 

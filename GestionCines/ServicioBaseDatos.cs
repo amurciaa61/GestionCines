@@ -8,7 +8,7 @@ namespace GestionCines
     {
         const int MAX_SESIONES_POR_SALA = 3;
         private readonly SqliteConnection conexion;
-        public SqliteCommand comando,comando1,comando2;
+        public SqliteCommand comando, comando1, comando2;
         private string FECHADELDIA { get; set; }
 
         public ServicioBaseDatos()
@@ -20,7 +20,10 @@ namespace GestionCines
         {
             ObservableCollection<Sala> salas = new ObservableCollection<Sala>();
             if (insertarFilaVacia)
+            {
                 salas.Add(new Sala());
+                salas[0].NUMERO = "Todas";
+            }
             conexion.Open();
             comando = conexion.CreateCommand();
             comando.CommandText = "SELECT * from salas ";
@@ -180,7 +183,10 @@ namespace GestionCines
         {
             ObservableCollection<Pelicula> peliculas = new ObservableCollection<Pelicula>();
             if (insertarFilaVacia)
+            {
                 peliculas.Add(new Pelicula());
+                peliculas[0].TITULO = "Todas";
+            }
             conexion.Open();
             comando = conexion.CreateCommand();
             comando.CommandText = "SELECT * FROM peliculas ORDER BY titulo";
@@ -213,9 +219,9 @@ namespace GestionCines
             {
                 while (lector.Read())
                 {
-                    sesiones.Add(new Sesion(lector.GetInt32(0), 
-                        new Pelicula(lector.GetInt32(1), lector.GetString(2), lector.GetString(3), lector.GetInt32(4), lector.GetString(5), lector.GetString(6)), 
-                        new Sala(lector.GetInt32(7), lector.GetString(8), lector.GetInt32(9), lector.GetBoolean(10)), 
+                    sesiones.Add(new Sesion(lector.GetInt32(0),
+                        new Pelicula(lector.GetInt32(1), lector.GetString(2), lector.GetString(3), lector.GetInt32(4), lector.GetString(5), lector.GetString(6)),
+                        new Sala(lector.GetInt32(7), lector.GetString(8), lector.GetInt32(9), lector.GetBoolean(10)),
                         lector.GetString(11)));
                 }
             }
@@ -227,7 +233,7 @@ namespace GestionCines
         public ObservableCollection<string> ObtenerSesionesFiltro()
         {
             ObservableCollection<string> sesiones = new ObservableCollection<string>();
-            sesiones.Add("");
+            sesiones.Add("Todas");
             conexion.Open();
             comando = conexion.CreateCommand();
             comando.CommandText = "select hora from sesiones " +
@@ -388,7 +394,7 @@ namespace GestionCines
             {
                 while (lector.Read())
                 {
-                    listado.Add(new Informe(lector.GetString(1), lector.GetString(0), lector.GetInt32(2), lector.GetInt32(3),
+                    listado.Add(new Informe(lector.GetString(1), lector.GetString(0), lector.GetString(2), lector.GetInt32(3),
                                             lector.GetInt32(4), lector.GetString(5)));
                 }
             }
@@ -415,7 +421,7 @@ namespace GestionCines
                     int capacidad = lector.GetInt32(9);  // capacidad de la sala
                     int disponibilidad = capacidad - ObtenerVentasPorSesion(lector.GetInt32(11)); // entradas disponibles en la sesion
                     if (disponibilidad > 0)
-                        ofertas.Add(new OfertaDisponible(lector.GetString(2), lector.GetString(0), lector.GetInt32(8),
+                        ofertas.Add(new OfertaDisponible(lector.GetString(2), lector.GetString(0), lector.GetString(8),
                                                          disponibilidad, lector.GetInt32(11), lector.GetString(3)));
                 }
             }
@@ -458,7 +464,7 @@ namespace GestionCines
         public ObservableCollection<string> ObtenerDatosFiltro(string campo)
         {
             ObservableCollection<string> datos = new ObservableCollection<string>();
-            datos.Add("");
+            datos.Add("Todas");
             conexion.Open();
             comando = conexion.CreateCommand();
             comando.CommandText = "select " + campo + " from peliculas " +
@@ -480,7 +486,7 @@ namespace GestionCines
         {
             ObservableCollection<string> horas = new ObservableCollection<string>();
             if (insertarFilaVacia)
-                horas.Add("");
+                horas.Add("Todas");
             conexion.Open();
             comando = conexion.CreateCommand();
             comando.CommandText = "select hora from horas " +
@@ -496,6 +502,55 @@ namespace GestionCines
             lector.Close();
             conexion.Close();
             return horas;
+        }
+        public Sala ObtenerSalaPorNumero(string numero)
+        {
+            Sala sala = null;
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "select * from salas " +
+                      "WHERE numero = @numero LIMIT 1";
+
+            comando.Parameters.Add("@numero", SqliteType.Text);
+            comando.Parameters["@numero"].Value = numero;
+            SqliteDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    sala = new Sala(lector.GetInt32(0), lector.GetString(1), lector.GetInt32(2), lector.GetBoolean(3));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return sala;
+        }
+        public Pelicula ObtenerPeliculaPorTitulo(string titulo)
+        {
+            Pelicula pelicula = null;
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            comando.CommandText = "select * from peliculas " +
+                      "WHERE titulo = @titulo LIMIT 1";
+
+            comando.Parameters.Add("@titulo", SqliteType.Text);
+            comando.Parameters["@titulo"].Value = titulo;
+            SqliteDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    pelicula = new Pelicula(lector.GetInt32(0),
+                        lector.GetString(1),
+                        lector.GetString(2),
+                        lector.GetInt32(3),
+                        lector.GetString(4),
+                        lector.GetString(5));
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return pelicula;
         }
     }
 }
