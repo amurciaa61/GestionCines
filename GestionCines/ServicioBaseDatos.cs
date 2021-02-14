@@ -402,6 +402,28 @@ namespace GestionCines
             conexion.Close();
             return listado;
         }
+        public int DisponibilidadSalaSesion(string numeroSala, int idSesion)
+        {
+            conexion.Open();
+            comando = conexion.CreateCommand();
+            int disponibilidad = 0;
+            comando.CommandText = "Select capacidad FROM salas WHERE numero = @numero LIMIT 1";
+            comando.Parameters.Add("@numero", SqliteType.Text);
+            comando.Parameters["@numero"].Value = numeroSala;
+            SqliteDataReader lector = comando.ExecuteReader();
+            if (lector.HasRows)
+            {
+                while (lector.Read())
+                {
+                    int capacidad = lector.GetInt32(0);  // capacidad de la sala
+                    disponibilidad = capacidad - ObtenerVentasPorSesion(idSesion);
+                }
+            }
+            lector.Close();
+            conexion.Close();
+            return disponibilidad;
+        }
+       
         public ObservableCollection<OfertaDisponible> ObtenerOfertaDisponible()
         {
             ObservableCollection<OfertaDisponible> ofertas = new ObservableCollection<OfertaDisponible>();

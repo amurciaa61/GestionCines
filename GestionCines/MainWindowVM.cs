@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace GestionCines
 {
@@ -32,7 +33,7 @@ namespace GestionCines
 
         public void Ayuda()
         {
-            
+            Help.ShowHelp(null,"GestionCines.chm");
         }
 
         public void Salas(MainWindow mainWindow)

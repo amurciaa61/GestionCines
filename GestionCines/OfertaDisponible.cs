@@ -17,7 +17,10 @@ namespace GestionCines
             PELICULA = pelicula;
             HORA = hora;
             NUMERO = numero;
-            DISPONIBILIDAD = disponibilidad;
+            if (disponibilidad < 0)
+                DISPONIBILIDAD = 0;
+            else
+                DISPONIBILIDAD = disponibilidad;
             IDSESION = idSesion;
             IMAGEN = imagen;
         }

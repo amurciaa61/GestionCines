@@ -25,9 +25,9 @@ namespace GestionCines
         }
         public void AñadirVenta()
         {
-          
+            // Refrescar dato de disponibilidad de la sala
+            VENTASELECCIONADA.DISPONIBILIDAD = bbdd.DisponibilidadSalaSesion(VENTASELECCIONADA.NUMERO, VENTASELECCIONADA.IDSESION);
             VENTAFORMULARIO = new OfertaDisponible(VENTASELECCIONADA);
-            
         }
         public bool HayOfertaDisponibleSeleccionada()
         {
@@ -46,11 +46,14 @@ namespace GestionCines
         }
         public void Cancelar()
         {
+            OFERTA = bbdd.ObtenerOfertaDisponible();
             VENTAFORMULARIO = new OfertaDisponible();
         }
         public bool HayDatos()
         {
-            return VENTAFORMULARIO.DISPONIBILIDAD > 0;
+            return VENTAFORMULARIO.PELICULA != null;
+       
+          //  return VENTAFORMULARIO.DISPONIBILIDAD >= 0;
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }
