@@ -5,5 +5,8 @@
     <Setting Name="endpoint" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://dint2021.azurewebsites.net/api</Value>
     </Setting>
+    <Setting Name="formaDePago" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Efectivo</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

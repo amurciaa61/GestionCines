@@ -51,6 +51,10 @@ namespace GestionCines
         {
             return SESIONSELECCIONADA != null;
         }
+        public bool TieneVentas()
+        {
+            return (HaySesionSeleccionada() && bbdd.ObtenerVentasPorSesion(SESIONSELECCIONADA.IDSESION) > 0);
+        }
         public bool FormularioOk()
         {
             return SESIONFORMULARIO.HORA != "" &&

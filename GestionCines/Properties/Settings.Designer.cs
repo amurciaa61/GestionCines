@@ -31,5 +31,14 @@ namespace GestionCines.Properties {
                 return ((string)(this["endpoint"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Efectivo")]
+        public string formaDePago {
+            get {
+                return ((string)(this["formaDePago"]));
+            }
+        }
     }
 }

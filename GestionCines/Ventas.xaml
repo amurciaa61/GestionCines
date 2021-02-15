@@ -7,11 +7,13 @@
         Title="Venta de entradas"
         Width="1000"
         Height="650"
-        MinWidth="100"
+        MinWidth="1000"
         MinHeight="650"
         Background="#74DDF8"
         ShowInTaskbar="False"
-        mc:Ignorable="d" Left="150" Top="20">
+        mc:Ignorable="d"
+        Left="150"
+        Top="20">
     <Window.CommandBindings>
         <CommandBinding CanExecute="CommandBinding_CanExecute_Cancelar"
                         Command="local:CustomCommands.Cancelar"
@@ -22,6 +24,12 @@
         <CommandBinding CanExecute="CommandBinding_CanExecute_GuardarCambios"
                         Command="local:CustomCommands.GuardarCambios"
                         Executed="CommandBinding_Executed_GuardarCambios" />
+        <CommandBinding Command="local:CustomCommands.InformeDetalle"
+                        Executed="CommandBinding_Executed_InformeDetalle" />
+        <CommandBinding Command="local:CustomCommands.Filtrar"
+                        Executed="CommandBinding_Executed_Filtrar" />
+        <CommandBinding Command="local:CustomCommands.InformeGeneral"
+                        Executed="CommandBinding_Executed_InformeGeneral" />
     </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -31,6 +39,12 @@
         <DockPanel Grid.Column="0">
             <StackPanel DockPanel.Dock="Bottom"
                         Style="{StaticResource StackPanelBottom}">
+                <Button Command="local:CustomCommands.InformeGeneral"
+                            ToolTip="Consulta informe general">Inf.General</Button>
+                <Button Command="local:CustomCommands.InformeDetalle"
+                        ToolTip="Consulta detalle de ventas">Inf.Detalle</Button>
+                <Button Command="local:CustomCommands.Filtrar"
+                            ToolTip="Refrescar datos">Refrescar</Button>
                 <Button Command="local:CustomCommands.Insertar"
                         ToolTip="Realizar venta">Venta</Button>
             </StackPanel>
@@ -50,7 +64,10 @@
                                             Header="Imagen">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding Path=IMAGEN}" Height="50" Width="45" Stretch="Fill"/>
+                                <Image Source="{Binding Path=IMAGEN}"
+                                       Height="50"
+                                       Width="45"
+                                       Stretch="Fill" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -85,7 +102,7 @@
             <TextBlock Text="Cantidad" />
             <TextBox Name="cantidadTextBox"
                      Text="{Binding Path=VENTAFORMULARIO.CANTIDAD, UpdateSourceTrigger=PropertyChanged}"
-                     ToolTip="No puede ser superior a las entradas disponibles"/>
+                     ToolTip="No puede ser superior a las entradas disponibles" />
             <TextBlock Text="Forma de pago" />
             <ComboBox x:Name="pagoComboBox"
                       ItemsSource="{Binding Path=PAGO}"

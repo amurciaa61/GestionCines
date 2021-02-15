@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace GestionCines
 {
@@ -52,8 +48,22 @@ namespace GestionCines
         public bool HayDatos()
         {
             return VENTAFORMULARIO.PELICULA != null;
-       
-          //  return VENTAFORMULARIO.DISPONIBILIDAD >= 0;
+        }
+        public void InformeDetalle(Ventas ventasWindow)
+        {
+            InformeDetalle informe = new InformeDetalle();
+            informe.Owner = ventasWindow;
+            informe.Show();
+        }
+        public void InformeGeneral(Ventas mainWindow)
+        {
+            InformeGeneral informe = new InformeGeneral();
+            informe.Owner = mainWindow;
+            informe.Show();
+        }
+        public void RefrescarFiltrado()
+        {
+            OFERTA = bbdd.ObtenerOfertaDisponible();
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

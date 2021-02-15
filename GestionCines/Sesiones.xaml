@@ -19,7 +19,7 @@
                         Executed="CommandBinding_Executed_Editar" />
         <CommandBinding Command="local:CustomCommands.Insertar"
                         Executed="CommandBinding_Executed_Añadir" />
-        <CommandBinding CanExecute="CommandBinding_CanExecute_Editar"
+        <CommandBinding CanExecute="CommandBinding_CanExecute_Borrar"
                         Command="local:CustomCommands.Borrar"
                         Executed="CommandBinding_Executed_Borrar" />
         <CommandBinding CanExecute="CommandBinding_CanExecute_GuardarCambios"

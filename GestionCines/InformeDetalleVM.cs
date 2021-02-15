@@ -7,9 +7,14 @@ namespace GestionCines
     class InformeDetalleVM : INotifyPropertyChanged
     {
         public ObservableCollection<Informe> LISTA { get; set; }
+        ServicioBaseDatos bbdd;
         public InformeDetalleVM()
         {
-            ServicioBaseDatos bbdd = new ServicioBaseDatos();
+            bbdd = new ServicioBaseDatos();
+            LISTA = bbdd.ObtenerInformeDetalle();
+        }
+        public void RefrescarFiltrado()
+        {
             LISTA = bbdd.ObtenerInformeDetalle();
         }
 

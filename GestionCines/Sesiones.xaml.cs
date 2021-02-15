@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GestionCines
 {
@@ -37,6 +26,10 @@ namespace GestionCines
         private void CommandBinding_Executed_Borrar(object sender, ExecutedRoutedEventArgs e)
         {
             _vm.BorrarSesion();
+        }
+        private void CommandBinding_CanExecute_Borrar(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _vm.HaySesionSeleccionada() && !_vm.TieneVentas();
         }
 
         private void CommandBinding_CanExecute_Editar(object sender, CanExecuteRoutedEventArgs e)

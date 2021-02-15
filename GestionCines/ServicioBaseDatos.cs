@@ -8,7 +8,7 @@ namespace GestionCines
     {
         const int MAX_SESIONES_POR_SALA = 3;
         private readonly SqliteConnection conexion;
-        public SqliteCommand comando, comando1, comando2;
+        public SqliteCommand comando;
         private string FECHADELDIA { get; set; }
 
         public ServicioBaseDatos()
