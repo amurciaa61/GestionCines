@@ -8,5 +8,8 @@
     <Setting Name="formaDePago" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Efectivo</Value>
     </Setting>
+    <Setting Name="empresa" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Cines del Sureste S.A.</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

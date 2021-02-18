@@ -3,13 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:GestionCines"
+        xmlns:properties="clr-namespace:GestionCines.Properties"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="DeCine"
-        Width="900"
-        Height="600"
-        MinWidth="900"
-        MinHeight="600"
+        Width="1000"
+        Height="700"
+        MinWidth="1000"
+        MinHeight="700"
         Icon="Imagenes/film.ico"
         mc:Ignorable="d">
     <Window.CommandBindings>
@@ -29,6 +30,18 @@
         <CommandBinding Command="local:CustomCommands.Ventas"
                         Executed="CommandBinding_Executed_Ventas" />
     </Window.CommandBindings>
+    <Window.Resources>
+        <!-- TextBlock StatusBar-->
+        <Style x:Key="statusBar"
+               TargetType="TextBlock">
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="Margin"
+                    Value="5,0,0,0" />
+            <Setter Property="FontStyle"
+                    Value="Italic" />
+        </Style>
+    </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Archivos">
@@ -77,7 +90,13 @@
             <MenuItem Command="local:CustomCommands.Salir"
                       Header="_Salir" />
         </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock Text="{Binding Source={x:Static properties:Settings.Default},Path=empresa}" Style="{StaticResource statusBar}"/>
+            </StatusBarItem>
+        </StatusBar>
         <Image Source="Imagenes/fondoMainWindow.jpg"
-               Stretch="UniformToFill" />
+               Stretch="UniformToFill" 
+               Margin="5,0,5,0"/>
     </DockPanel>
 </Window>

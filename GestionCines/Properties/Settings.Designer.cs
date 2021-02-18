@@ -40,5 +40,14 @@ namespace GestionCines.Properties {
                 return ((string)(this["formaDePago"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Cines del Sureste S.A.")]
+        public string empresa {
+            get {
+                return ((string)(this["empresa"]));
+            }
+        }
     }
 }
