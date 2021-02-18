@@ -7,7 +7,7 @@ namespace GestionCines
     class InformeDetalleVM : INotifyPropertyChanged
     {
         public ObservableCollection<Informe> LISTA { get; set; }
-        ServicioBaseDatos bbdd;
+        readonly ServicioBaseDatos bbdd;
         public InformeDetalleVM()
         {
             bbdd = new ServicioBaseDatos();

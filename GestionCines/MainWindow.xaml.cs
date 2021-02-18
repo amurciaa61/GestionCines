@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 
 
@@ -13,7 +14,14 @@ namespace GestionCines
         public MainWindow()
         {
             // Instanciamos la clase VistaModelo
-            _vm = new MainWindowVM();
+            try
+            {
+                _vm = new MainWindowVM();
+            }catch(Exception e)
+            {
+                MessageBox.Show(e.Message+ ". Pulse Aceptar para Salir.", "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
+                App.Current.Shutdown();
+            }
             InitializeComponent();
             DataContext = _vm;
         }

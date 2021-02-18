@@ -11,6 +11,8 @@
         Height="700"
         MinWidth="1000"
         MinHeight="700"
+        Left="50"
+        Top="20"
         Icon="Imagenes/film.ico"
         mc:Ignorable="d">
     <Window.CommandBindings>
