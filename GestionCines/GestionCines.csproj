@@ -138,6 +138,7 @@
       <DependentUpon>InformeDetalle.xaml</DependentUpon>
     </Compile>
     <Compile Include="InformeDetalleVM.cs" />
+    <Compile Include="MisExcepciones.cs" />
     <Compile Include="OfertaDisponible.cs" />
     <Compile Include="InformeGeneral.xaml.cs">
       <DependentUpon>InformeGeneral.xaml</DependentUpon>
@@ -215,6 +216,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

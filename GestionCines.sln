@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionCines", "GestionCine
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DeCine", "DeCine\DeCine.vdproj", "{72DDA502-889F-4ABB-AE19-54760DC73F0B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{908D1307-7558-4793-AF00-1417185EA875}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
