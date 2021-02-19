@@ -30,7 +30,8 @@ namespace GestionCines
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(e.Message + ". Pulse Aceptar para Salir.", "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
+                App.Current.Shutdown();
             }
         }
 

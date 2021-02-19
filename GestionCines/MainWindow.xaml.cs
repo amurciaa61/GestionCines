@@ -30,6 +30,10 @@ namespace GestionCines
         {
             _vm.Ayuda();
         }
+        private void CommandBinding_Executed_Utilidades(object sender, ExecutedRoutedEventArgs e)
+        {
+            _vm.Utilidades(this);
+        }
 
         private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
         {

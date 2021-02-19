@@ -23,21 +23,15 @@ namespace GestionCines.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://dint2021.azurewebsites.net/api")]
-        public string endpoint {
-            get {
-                return ((string)(this["endpoint"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Efectivo")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Bizum")]
         public string formaDePago {
             get {
                 return ((string)(this["formaDePago"]));
+            }
+            set {
+                this["formaDePago"] = value;
             }
         }
         
@@ -47,6 +41,15 @@ namespace GestionCines.Properties {
         public string empresa {
             get {
                 return ((string)(this["empresa"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://dint2021.azurewebsites.net/api")]
+        public string endpoint {
+            get {
+                return ((string)(this["endpoint"]));
             }
         }
     }

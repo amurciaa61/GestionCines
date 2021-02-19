@@ -29,7 +29,7 @@
             Executed="CommandBinding_Executed_Cancelar" />
     </Window.CommandBindings>
     <Window.Resources>
-        <!--  TextBox y TextBlock y CheckBox  -->
+        <!--  CheckBox  -->
         <Style TargetType="CheckBox">
             <Setter Property="Margin" Value="0,0,0,10" />
         </Style>

@@ -31,6 +31,8 @@
                         Executed="CommandBinding_Executed_InformeDetalle" />
         <CommandBinding Command="local:CustomCommands.Ventas"
                         Executed="CommandBinding_Executed_Ventas" />
+        <CommandBinding Command="local:CustomCommands.Utilidades"
+                        Executed="CommandBinding_Executed_Utilidades" />
     </Window.CommandBindings>
     <Window.Resources>
         <!-- TextBlock StatusBar-->
@@ -63,6 +65,12 @@
                           Header="_Ventas">
                     <MenuItem.Icon>
                         <Image Source="Imagenes/euro.ico" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="local:CustomCommands.Utilidades"
+                          Header="_Utilidades">
+                    <MenuItem.Icon>
+                        <Image Source="Imagenes/config.ico" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />

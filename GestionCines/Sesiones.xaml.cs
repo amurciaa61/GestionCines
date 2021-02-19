@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace GestionCines
@@ -11,7 +12,15 @@ namespace GestionCines
         private readonly SesionesVM _vm;
         public Sesiones()
         {
-            _vm = new SesionesVM();
+            try
+            {
+                _vm = new SesionesVM();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message + ". Pulse Aceptar para Salir.", "Errores", MessageBoxButton.OK, MessageBoxImage.Error);
+                App.Current.Shutdown();
+            }
             InitializeComponent();
             DataContext = _vm;
         }

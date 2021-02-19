@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 
@@ -14,10 +15,17 @@ namespace GestionCines
 
         public VentasVM()
         {
-            bbdd = new ServicioBaseDatos();
-            OFERTA = bbdd.ObtenerOfertaDisponible();
-            PAGO = bbdd.ObtenerFormaDePago();
-            VENTAFORMULARIO = new OfertaDisponible();
+            try
+            {
+                bbdd = new ServicioBaseDatos();
+                OFERTA = bbdd.ObtenerOfertaDisponible();
+                PAGO = bbdd.ObtenerFormaDePago();
+                VENTAFORMULARIO = new OfertaDisponible();
+            }catch(Exception ex)
+            {
+                throw new MisExcepciones(ex.Message);
+            }
+            
         }
         public void AñadirVenta()
         {

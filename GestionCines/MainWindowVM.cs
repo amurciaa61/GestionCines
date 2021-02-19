@@ -72,6 +72,17 @@ namespace GestionCines
             ventas.Owner = mainWindow;
             ventas.Show();
         }
+        public void Utilidades(MainWindow mainWindow)
+        {
+            Utilidades utilidades = new Utilidades();
+            utilidades.Owner = mainWindow;
+            utilidades.FormaDePago = Properties.Settings.Default.formaDePago;
+            if (utilidades.ShowDialog() == true)
+            {
+                Properties.Settings.Default.formaDePago = utilidades.FormaDePago;
+                Properties.Settings.Default.Save();
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

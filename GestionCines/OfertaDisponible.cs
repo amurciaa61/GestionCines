@@ -32,10 +32,9 @@ namespace GestionCines
             NUMERO = ofertadisponible.NUMERO;
             DISPONIBILIDAD = ofertadisponible.DISPONIBILIDAD;
             IDSESION = ofertadisponible.IDSESION;
-            PAGO = "Efectivo";
+            PAGO = Properties.Settings.Default.formaDePago;
             CANTIDAD = 0;
             IMAGEN = ofertadisponible.IMAGEN;
-
         }
 
         public OfertaDisponible()

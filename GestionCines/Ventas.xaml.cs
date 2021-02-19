@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace GestionCines
@@ -11,7 +12,10 @@ namespace GestionCines
         private readonly VentasVM _vm;
         public Ventas()
         {
+
             _vm = new VentasVM();
+            if (_vm.PAGO.Count < 3)
+                MessageBox.Show("Hay menos de 3 formas de pago disponibles", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
             InitializeComponent();
             DataContext = _vm;
         }

@@ -13,7 +13,14 @@ namespace GestionCines
 
         public ServicioBaseDatos()
         {
-            conexion = new SqliteConnection("Data Source=cines.db");
+            try
+            {
+                conexion = new SqliteConnection("Data Source=cines.db");
+            }
+            catch (Exception ex)
+            {
+                throw new MisExcepciones(ex.Message+"\nNo se ha podido establecer conexión con la base de datos");
+            }
             FECHADELDIA = FormatearFechaDelDia();
         }
         public ObservableCollection<Sala> ObtenerSalas(bool soloDisponibles, bool insertarFilaVacia)
@@ -423,7 +430,7 @@ namespace GestionCines
             conexion.Close();
             return disponibilidad;
         }
-       
+
         public ObservableCollection<OfertaDisponible> ObtenerOfertaDisponible()
         {
             ObservableCollection<OfertaDisponible> ofertas = new ObservableCollection<OfertaDisponible>();
@@ -453,10 +460,14 @@ namespace GestionCines
         }
         public ObservableCollection<string> ObtenerFormaDePago()
         {
+            string formaDePagoPorDefecto = Properties.Settings.Default.formaDePago;
             ObservableCollection<string> formaDePago = new ObservableCollection<string>();
+            formaDePago.Add(formaDePagoPorDefecto);
             conexion.Open();
             comando = conexion.CreateCommand();
-            comando.CommandText = "select * FROM formadepago";
+            comando.CommandText = "select * FROM formadepago WHERE nombre <> @nombre";
+            comando.Parameters.Add("@nombre", SqliteType.Text);
+            comando.Parameters["@nombre"].Value = formaDePagoPorDefecto;
             SqliteDataReader lector = comando.ExecuteReader();
             if (lector.HasRows)
             {

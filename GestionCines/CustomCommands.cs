@@ -31,6 +31,15 @@ namespace GestionCines
                 new KeyGesture(Key.S,ModifierKeys.Control)
             }
             );
+        public static readonly RoutedUICommand Utilidades = new RoutedUICommand
+            ("Utilidades",
+            "Utilidades",
+            typeof(CustomCommands),
+            new InputGestureCollection()
+            {
+                        new KeyGesture(Key.U,ModifierKeys.Control)
+            }
+            );
         public static readonly RoutedUICommand Editar = new RoutedUICommand
             ("Editar",
             "Editar",
@@ -54,6 +63,11 @@ namespace GestionCines
         public static readonly RoutedUICommand Cancelar = new RoutedUICommand
             ("Cancelar",
             "Cancelar",
+            typeof(CustomCommands)
+            );
+        public static readonly RoutedUICommand Aceptar = new RoutedUICommand
+            ("Aceptar",
+            "Aceptar",
             typeof(CustomCommands)
             );
         public static readonly RoutedUICommand Sesiones = new RoutedUICommand
