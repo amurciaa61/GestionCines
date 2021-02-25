@@ -69,5 +69,9 @@ namespace GestionCines
         {
             e.CanExecute = _vm.HayDatos();
         }
+        private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

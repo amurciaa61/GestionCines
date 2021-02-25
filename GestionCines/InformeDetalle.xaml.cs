@@ -19,5 +19,9 @@ namespace GestionCines
         {
             _vm.RefrescarFiltrado();
         }
+        private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

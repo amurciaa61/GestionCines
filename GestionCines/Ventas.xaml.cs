@@ -59,5 +59,17 @@ namespace GestionCines
         {
             _vm.RefrescarFiltrado();
         }
+        private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("¿Esta seguro que desea salir de la pantalla de VENTAS?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    this.Close();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+        }
     }
 }

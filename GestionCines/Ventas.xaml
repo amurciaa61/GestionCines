@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:GestionCines"
+        xmlns:properties="clr-namespace:GestionCines.Properties"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="Venta de entradas"
         Width="1000"
@@ -13,7 +14,8 @@
         ShowInTaskbar="False"
         mc:Ignorable="d"
         Left="150"
-        Top="20">
+        Top="20"
+        Icon="Imagenes/euro.ico">
     <Window.CommandBindings>
         <CommandBinding CanExecute="CommandBinding_CanExecute_Cancelar"
                         Command="local:CustomCommands.Cancelar"
@@ -30,93 +32,142 @@
                         Executed="CommandBinding_Executed_Filtrar" />
         <CommandBinding Command="local:CustomCommands.InformeGeneral"
                         Executed="CommandBinding_Executed_InformeGeneral" />
+        <CommandBinding Command="local:CustomCommands.Salir"
+                        Executed="CommandBinding_Executed_Salir" />
     </Window.CommandBindings>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="250" />
-        </Grid.ColumnDefinitions>
-        <DockPanel Grid.Column="0">
-            <StackPanel DockPanel.Dock="Bottom"
-                        Style="{StaticResource StackPanelBottom}">
-                <Button Command="local:CustomCommands.InformeGeneral"
-                            ToolTip="Consulta informe general">Inf.General</Button>
-                <Button Command="local:CustomCommands.InformeDetalle"
-                        ToolTip="Consulta detalle de ventas">Inf.Detalle</Button>
-                <Button Command="local:CustomCommands.Filtrar"
-                            ToolTip="Refrescar datos">Refrescar</Button>
-                <Button Command="local:CustomCommands.Insertar"
-                        ToolTip="Realizar venta">Venta</Button>
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.InformeGeneral"
+                        ToolTip="Consulta informe general"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/informegeneral.ico" />
+                </Button>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.InformeDetalle"
+                        ToolTip="Consulta detalle de ventas"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/detalleventas.ico" />
+                </Button>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.Filtrar"
+                        ToolTip="Refrescar datos"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/refresh.ico" />
+                </Button>
+                <Separator />
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.Insertar"
+                        ToolTip="Realizar venta."
+                        Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/euroblanco.ico" />
+                </Button>
+                <Separator />
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.Salir"
+                        ToolTip="Salir"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/exit.ico" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="250" />
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0">
+                <DataGrid x:Name="ventasDataGrid"
+                          Margin="10,10,0,10"
+                          AlternatingRowBackground="LightBlue"
+                          AlternationCount="2"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          ColumnWidth="*"
+                          IsReadOnly="True"
+                          ItemsSource="{Binding Path=OFERTA}"
+                          SelectedItem="{Binding Path=VENTASELECCIONADA}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="85"
+                                                Header="Imagen">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding Path=IMAGEN}"
+                                           Height="50"
+                                           Width="45"
+                                           Stretch="Fill" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Binding="{Binding Path=PELICULA}"
+                                            Header="Película" />
+                        <DataGridTextColumn Binding="{Binding Path=HORA}"
+                                            Header="Sesion"
+                                            Width="80" />
+                        <DataGridTextColumn Binding="{Binding Path=NUMERO}"
+                                            Header="Sala"
+                                            Width="80" />
+                        <DataGridTextColumn Binding="{Binding Path=DISPONIBILIDAD}"
+                                            Header="Disponibilidad"
+                                            Width="150" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+            <StackPanel Grid.Column="1"
+                        Style="{StaticResource StackPanelEdicion}">
+                <TextBlock Text="Película" />
+                <TextBox IsReadOnly="True"
+                         Text="{Binding Path=VENTAFORMULARIO.PELICULA}" />
+                <TextBlock Text="Sesión" />
+                <TextBox IsReadOnly="True"
+                         Text="{Binding Path=VENTAFORMULARIO.HORA}" />
+                <TextBlock Text="Sala" />
+                <TextBox IsReadOnly="True"
+                         Text="{Binding Path=VENTAFORMULARIO.NUMERO}" />
+                <TextBlock Text="Entradas disponibles" />
+                <TextBox IsReadOnly="True"
+                         Text="{Binding Path=VENTAFORMULARIO.DISPONIBILIDAD}" />
+                <TextBlock Text="Cantidad" />
+                <TextBox Name="cantidadTextBox"
+                         Text="{Binding Path=VENTAFORMULARIO.CANTIDAD, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="No puede ser superior a las entradas disponibles" />
+                <TextBlock Text="Forma de pago" />
+                <ComboBox x:Name="pagoComboBox"
+                          ItemsSource="{Binding Path=PAGO}"
+                          SelectedValue="PAGO"
+                          SelectedItem="{Binding Path=VENTAFORMULARIO.PAGO , UpdateSourceTrigger=PropertyChanged}" />
+                <StackPanel HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                    <Button Command="local:CustomCommands.Cancelar"
+                            IsCancel="True"
+                            ToolTip="Cancelar cambios">Cancelar</Button>
+                    <Button Command="local:CustomCommands.GuardarCambios"
+                            IsDefault="True"
+                            ToolTip="Guardar cambios">Guardar</Button>
+                </StackPanel>
             </StackPanel>
-            <DataGrid x:Name="ventasDataGrid"
-                      Margin="10,10,0,10"
-                      AlternatingRowBackground="LightBlue"
-                      AlternationCount="2"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      CanUserDeleteRows="False"
-                      ColumnWidth="*"
-                      IsReadOnly="True"
-                      ItemsSource="{Binding Path=OFERTA}"
-                      SelectedItem="{Binding Path=VENTASELECCIONADA}">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="85"
-                                            Header="Imagen">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Image Source="{Binding Path=IMAGEN}"
-                                       Height="50"
-                                       Width="45"
-                                       Stretch="Fill" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn Binding="{Binding Path=PELICULA}"
-                                        Header="Película" />
-                    <DataGridTextColumn Binding="{Binding Path=HORA}"
-                                        Header="Sesion"
-                                        Width="80" />
-                    <DataGridTextColumn Binding="{Binding Path=NUMERO}"
-                                        Header="Sala"
-                                        Width="80" />
-                    <DataGridTextColumn Binding="{Binding Path=DISPONIBILIDAD}"
-                                        Header="Disponibilidad"
-                                        Width="150" />
-                </DataGrid.Columns>
-            </DataGrid>
-        </DockPanel>
-        <StackPanel Grid.Column="1"
-                    Style="{StaticResource StackPanelEdicion}">
-            <TextBlock Text="Película" />
-            <TextBox IsReadOnly="True"
-                     Text="{Binding Path=VENTAFORMULARIO.PELICULA}" />
-            <TextBlock Text="Sesión" />
-            <TextBox IsReadOnly="True"
-                     Text="{Binding Path=VENTAFORMULARIO.HORA}" />
-            <TextBlock Text="Sala" />
-            <TextBox IsReadOnly="True"
-                     Text="{Binding Path=VENTAFORMULARIO.NUMERO}" />
-            <TextBlock Text="Entradas disponibles" />
-            <TextBox IsReadOnly="True"
-                     Text="{Binding Path=VENTAFORMULARIO.DISPONIBILIDAD}" />
-            <TextBlock Text="Cantidad" />
-            <TextBox Name="cantidadTextBox"
-                     Text="{Binding Path=VENTAFORMULARIO.CANTIDAD, UpdateSourceTrigger=PropertyChanged}"
-                     ToolTip="No puede ser superior a las entradas disponibles" />
-            <TextBlock Text="Forma de pago" />
-            <ComboBox x:Name="pagoComboBox"
-                      ItemsSource="{Binding Path=PAGO}"
-                      SelectedValue="PAGO"
-                      SelectedItem="{Binding Path=VENTAFORMULARIO.PAGO , UpdateSourceTrigger=PropertyChanged}" />
-            <StackPanel HorizontalAlignment="Center"
-                        Orientation="Horizontal">
-                <Button Command="local:CustomCommands.Cancelar"
-                        IsCancel="True"
-                        ToolTip="Cancelar cambios">Cancelar</Button>
-                <Button Command="local:CustomCommands.GuardarCambios"
-                        IsDefault="True"
-                        ToolTip="Guardar cambios">Guardar</Button>
-            </StackPanel>
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </DockPanel>
 </Window>

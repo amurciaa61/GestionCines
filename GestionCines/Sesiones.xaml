@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:GestionCines"
+        xmlns:properties="clr-namespace:GestionCines.Properties"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="Sesiones"
@@ -12,6 +13,7 @@
         MinHeight="600"
         Background="#74DDF8"
         ShowInTaskbar="False"
+        Icon="Imagenes/sesiones.ico"
         mc:Ignorable="d">
     <Window.CommandBindings>
         <CommandBinding CanExecute="CommandBinding_CanExecute_Editar"
@@ -28,78 +30,114 @@
         <CommandBinding CanExecute="CommandBinding_CanExecute_Cancelar"
                         Command="local:CustomCommands.Cancelar"
                         Executed="CommandBinding_Executed_Cancelar" />
+        <CommandBinding Command="local:CustomCommands.Salir"
+                        Executed="CommandBinding_Executed_Salir" />
     </Window.CommandBindings>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="250" />
-        </Grid.ColumnDefinitions>
-        <DockPanel Grid.Column="0">
-            <StackPanel DockPanel.Dock="Bottom"
-                        Style="{StaticResource StackPanelBottom}">
-                <Button Command="local:CustomCommands.Borrar"
-                        Content="Borrar"
-                        ToolTip="Eliminar registro seleccionado" />
-                <Button Command="local:CustomCommands.Editar"
-                        Content="Editar"
-                        ToolTip="Modificar registro seleccionado" />
-                <Button Command="local:CustomCommands.Insertar"
-                        Content="Añadir"
-                        ToolTip="Insertar un nuevo registro" />
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.Borrar"
+                        ToolTip="Borrar datos"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/borrar.ico" />
+                </Button>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.Editar"
+                        ToolTip="Modificar datos"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/editar.ico" />
+                </Button>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.Insertar"
+                        ToolTip="Insertar nuevo registro"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/insertar.ico" />
+                </Button>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.Salir"
+                        ToolTip="Salir"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/exit.ico" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="250" />
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0">
+                <DataGrid x:Name="sesionesDataGrid"
+                          Margin="10,10,0,10"
+                          AlternatingRowBackground="LightBlue"
+                          AlternationCount="2"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          ColumnWidth="*"
+                          IsReadOnly="True"
+                          ItemsSource="{Binding SESIONES}"
+                          SelectedItem="{Binding SESIONSELECCIONADA}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding IDSESION}"
+                                            Header="ID" />
+                        <DataGridTextColumn Binding="{Binding TITULOPELICULA}"
+                                            Header="Película"
+                                            Width="300" />
+                        <DataGridTextColumn Binding="{Binding NUMEROSALA}"
+                                            Header="Sala" />
+                        <DataGridTextColumn Binding="{Binding HORA}"
+                                            Header="Hora" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+            <StackPanel Grid.Column="1"
+                        Style="{StaticResource StackPanelEdicion}">
+                <TextBlock Text="Id" />
+                <TextBox x:Name="idSesionTextBox"
+                         IsReadOnly="True"
+                         Text="{Binding SESIONFORMULARIO.IDSESION, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="Pelicula" />
+                <ComboBox x:Name="peliculaComboBox"
+                          ItemsSource="{Binding TITULOS}"
+                          SelectedItem="{Binding Path=SESIONFORMULARIO.TITULOPELICULA, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="Sala" />
+                <ComboBox x:Name="salaComboBox"
+                          ItemsSource="{Binding SALANUMERO}"
+                          SelectedItem="{Binding Path=SESIONFORMULARIO.NUMEROSALA, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="Hora" />
+                <ComboBox x:Name="horaComboBox"
+                          ItemsSource="{Binding HORAS}"
+                          SelectedItem="{Binding Path=SESIONFORMULARIO.HORA, UpdateSourceTrigger=PropertyChanged}" />
+                <StackPanel HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                    <Button Command="local:CustomCommands.Cancelar"
+                            Content="Cancelar"
+                            IsCancel="True"
+                            ToolTip="Cancelar cambios" />
+                    <Button Command="local:CustomCommands.GuardarCambios"
+                            Content="Guardar"
+                            IsDefault="True"
+                            ToolTip="Guardar cambios" />
+                </StackPanel>
             </StackPanel>
-            <DataGrid x:Name="sesionesDataGrid"
-                      Margin="10,10,0,10"
-                      AlternatingRowBackground="LightBlue"
-                      AlternationCount="2"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      CanUserDeleteRows="False"
-                      ColumnWidth="*"
-                      IsReadOnly="True"
-                      ItemsSource="{Binding SESIONES}"
-                      SelectedItem="{Binding SESIONSELECCIONADA}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding IDSESION}"
-                                        Header="ID" />
-                    <DataGridTextColumn Binding="{Binding TITULOPELICULA}"
-                                        Header="Película"
-                                        Width="300" />
-                    <DataGridTextColumn Binding="{Binding NUMEROSALA}"
-                                        Header="Sala" />
-                    <DataGridTextColumn Binding="{Binding HORA}"
-                                        Header="Hora" />
-                </DataGrid.Columns>
-            </DataGrid>
-        </DockPanel>
-        <StackPanel Grid.Column="1"
-                    Style="{StaticResource StackPanelEdicion}">
-            <TextBlock Text="Id" />
-            <TextBox x:Name="idSesionTextBox"
-                     IsReadOnly="True"
-                     Text="{Binding SESIONFORMULARIO.IDSESION, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Pelicula" />
-            <ComboBox x:Name="peliculaComboBox"
-                      ItemsSource="{Binding TITULOS}"
-                      SelectedItem="{Binding Path=SESIONFORMULARIO.TITULOPELICULA, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Sala" />
-            <ComboBox x:Name="salaComboBox"
-                      ItemsSource="{Binding SALANUMERO}"
-                      SelectedItem="{Binding Path=SESIONFORMULARIO.NUMEROSALA, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="Hora" />
-            <ComboBox x:Name="horaComboBox"
-                      ItemsSource="{Binding HORAS}"
-                      SelectedItem="{Binding Path=SESIONFORMULARIO.HORA, UpdateSourceTrigger=PropertyChanged}" />
-            <StackPanel HorizontalAlignment="Center"
-                        Orientation="Horizontal">
-                <Button Command="local:CustomCommands.Cancelar"
-                        Content="Cancelar"
-                        IsCancel="True"
-                        ToolTip="Cancelar cambios" />
-                <Button Command="local:CustomCommands.GuardarCambios"
-                        Content="Guardar"
-                        IsDefault="True"
-                        ToolTip="Guardar cambios" />
-            </StackPanel>
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </DockPanel>
 </Window>

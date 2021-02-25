@@ -4,14 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GestionCines"
+        xmlns:properties="clr-namespace:GestionCines.Properties"
         mc:Ignorable="d"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         Title="Utilidades"
         Height="200"
-        Width="400">
+        Width="400"
+        Icon="Imagenes/config.ico">
     <Window.CommandBindings>
-        <CommandBinding Command="local:CustomCommands.Aceptar"
+        <CommandBinding Command="local:CustomCommands.GuardarCambios"
                         Executed="CommandBinding_Executed_Aceptar" />
     </Window.CommandBindings>
     <Window.Resources>
@@ -23,9 +25,36 @@
         </Style>
     </Window.Resources>
     <DockPanel>
-        <Grid DockPanel.Dock="Top" Margin="10">
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar> 
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        IsCancel="True"
+                        ToolTip="Cancelar cambios"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/cancelar.ico" />
+                </Button>
+                <Button Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonExterno}"
+                        Command="local:CustomCommands.GuardarCambios"
+                        IsDefault="True"
+                        ToolTip="Guardar cambios"
+                        Margin="0,0,10,0"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
+                    <Image Width="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Height="{Binding Source={x:Static properties:Settings.Default}, Path=botonInterno}"
+                           Source="Imagenes/guardar.ico" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Border Background="#74DDF8" Margin="10" Padding="10" CornerRadius="5" BorderThickness="1" BorderBrush="Black">
+        <Grid DockPanel.Dock="Top"
+              Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition />
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="190" />
@@ -33,19 +62,15 @@
             </Grid.ColumnDefinitions>
             <TextBlock Text="Forma de pago por defecto"
                        Grid.Row="0"
-                       Grid.Column="0" 
-                       VerticalAlignment="Stretch"
-                       FontSize="15"/>
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       FontSize="15" />
             <ComboBox x:Name="formaPagoComboBox"
                       Grid.Row="0"
                       Grid.Column="1"
                       VerticalAlignment="Stretch"
                       SelectedItem="{Binding Path=FormaDePago}" />
         </Grid>
-        <StackPanel Style="{StaticResource StackPanelBottom}">
-        <Button IsCancel="True">Cancelar</Button>
-        <Button Command="local:CustomCommands.Aceptar"
-                IsDefault="True">Aceptar</Button>
-        </StackPanel>
+        </Border>
     </DockPanel>
 </Window>

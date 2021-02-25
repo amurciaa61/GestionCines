@@ -34,7 +34,16 @@ namespace GestionCines
         }
         private void CommandBinding_Executed_Borrar(object sender, ExecutedRoutedEventArgs e)
         {
-            _vm.BorrarSesion();
+            MessageBoxResult result = MessageBox.Show("¿Esta seguro que desea borrar la sesión?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    string borrado = _vm.BorrarSesion();
+                    MessageBox.Show("Registro (" + borrado + ") borrado", "Baja", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
         }
         private void CommandBinding_CanExecute_Borrar(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -63,6 +72,10 @@ namespace GestionCines
         private void CommandBinding_CanExecute_Cancelar(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = _vm.HayDatos();
+        }
+        private void CommandBinding_Executed_Salir(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

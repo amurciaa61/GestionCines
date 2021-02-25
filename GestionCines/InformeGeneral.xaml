@@ -11,7 +11,7 @@
         MinHeight="700"
         Background="#74DDF8"
         ShowInTaskbar="False"
-        mc:Ignorable="d" Top="10" Left="100">
+        mc:Ignorable="d" Top="10" Left="100" Icon="Imagenes/informegeneral.ico">
     <Window.CommandBindings>
         <CommandBinding Command="local:CustomCommands.Filtrar"
                         Executed="CommandBinding_Executed_Filtrar" />
